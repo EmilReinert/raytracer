@@ -19,6 +19,9 @@ public:
 	Light(glm::vec3 const&source, std::string const& name, Color const& clr):
 		m_name{name},m_source{source},m_clr{clr}{}
 
+	glm::vec3 getSource(){ return this->m_source;}
+	std::string getName(){ return this->m_name;}
+	Color getColor(){ return this->m_clr;}
 
 
 

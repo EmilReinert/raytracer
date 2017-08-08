@@ -7,15 +7,11 @@
 Shape::Shape (std::string const& name, Material const& material) :
 	m_name{name},
 	m_material{material}
-{
-	std::cout << "Shape Construction\n";
-}
+{}
 
 //Destructor
 Shape::~Shape()
-{
-	std::cout << "Shape Destruction\n";
-}
+{}
 
 //Getter
 std::string Shape::get_name() const

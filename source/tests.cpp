@@ -291,17 +291,7 @@ TEST_CASE("intersection tests","Box")
 	std::cout << "\n\nray 4: \n";
 	hit = box.intersect(ray4,distance);
 	std::cout << "\n\nHit? " << hit << " Distance: " << distance <<"\n";
-/*
-	OUTPUT:
-	ray 4: 
 
-	origin: 0, 0, 0
-	direction: 0, 0, -2
-	origin: 0, 0, 0
-	direction: 0, 0, -1
-
-	Hit? 1 Distance: -nan <-------------- !!!!!!
-*/
 	distance = 0.0f;
 	std::cout << "\n\nray 4b: \n";
 	hit = box.intersect(ray4b,distance);
@@ -349,5 +339,4 @@ TEST_CASE("vektor normalization", "glm::vec3")
 }
 
 
-//lissylissylissy <33333
- 
+

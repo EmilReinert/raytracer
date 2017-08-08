@@ -15,12 +15,12 @@
 #include "color.hpp"
 #include "scene.hpp"
 #include "sdfloader.hpp"
+#include "light.hpp"
 
 // ----------------------------------
 // SHAPE TESTS
 // ----------------------------------
 
-//karos änderung
 
 TEST_CASE("getter shape","[shape]")
 {
@@ -171,8 +171,6 @@ TEST_CASE("intersectRaySphere", "[intersect]")
 
 TEST_CASE("virtual", "[Destructors]")
 {
-
-	std::cout << "\ntesting virtual and non-virtual construction and destruction\n";
 
 	Color c_red {255.0f, 0.0f, 0.0f};
 	Material red {"", c_red, c_red, c_red, 0.0f};
@@ -339,4 +337,17 @@ TEST_CASE("vektor normalization", "glm::vec3")
 }
 
 
+// ----------------------------------
+// LIGHT Tests
+// ----------------------------------
+
+
+TEST_CASE("light construction", "[lightconstruction]"){
+	Light light1 = Light();
+	REQUIRE(light1.getName()=="noname_light");
+	REQUIRE(light1.getColor()==Color());
+	REQUIRE(light1.getSource()==glm::vec3{0.0f});
+
+
+}
 

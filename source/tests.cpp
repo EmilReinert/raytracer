@@ -243,7 +243,7 @@ TEST_CASE("intersection tests","Box")
 {
 	Color c {0.0f,0.0f,0.0f};
 
-	Ray ray1 {glm::vec3{0.0f}, //from koordinatenursprung
+	Ray ray1 {glm::vec3(1.0f,0.0f,0.0f), //from koordinatenursprung
 			glm::vec3{1.0f,1.0f,-1.0f}}; //schräg in -z richtung
 
 	Ray ray2 {glm::vec3{0.0f}, //aus koordinatenursprung
@@ -270,7 +270,7 @@ TEST_CASE("intersection tests","Box")
 	std::cout << box;
 
 	float distance = 0.0f;
-	std::cout << "\n\nray 1: \n";
+	std::cout << "\n\nray --MUYIMPORTANTE--: \n";
 	bool hit = box.intersect(ray1,distance);
 	std::cout << "\nHit? " << hit << " Distance: " << distance;
 
@@ -337,7 +337,7 @@ TEST_CASE("vektor normalization", "glm::vec3")
 	norm = glm::normalize(v);
 
 	std::cout << "\n" << norm.x << ", " << norm.y
-		<< ", "  << norm.z;
+		<< ", "  << norm.z<<"\n";
 }
 
 
@@ -365,10 +365,13 @@ TEST_CASE("light construction", "[lightconstruction]"){
 
 TEST_CASE("intersection constructor","[intersectionconstructor]"){ 
 	Intersection inter1 = Intersection();
-	Intersection inter2 = Intersection(glm::vec3{1.0f},glm::vec3{1.0f},1.0f);
+	Intersection inter2 = Intersection(glm::vec3{1.0f},glm::vec3{1.0f},1.0f,false);
 	//REQUIRE(glm::vec3{1.0f}==glm::vec3(1.0f,1.0f,1.0f));
 	REQUIRE(inter1.getDirection()==glm::vec3{0.0f});
-	REQUIRE(inter2.getDirection()==glm::vec3(1.0f,1.0f,1.0f));	
+	REQUIRE(inter2.getDirection()==glm::vec3(1.0f,1.0f,1.0f));
+	REQUIRE(!inter1.isHit());
+	glm::vec3 vv =glm::vec3{1.0f};
+		auto vvv= glm::normalize(vv);
 }
 
 

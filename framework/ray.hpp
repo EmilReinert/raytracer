@@ -6,6 +6,8 @@
 
 #include <glm/vec3.hpp>
 
+
+
 struct Ray
 {
 	glm::vec3 m_origin;
@@ -22,6 +24,15 @@ struct Ray
         	<< ray.m_direction.z;
         return os;
     }
+	void setLength(double const& length){
+		/*glm::vec3 vv =glm::vec3{1.0f};
+		auto vvv= glm::normalize(vv);
+		glm::vec3 holdervector = glm::normalize(this->m_direction);
+		m_direction = glm::vec3(length*holdervector.x,length*holdervector.y,length*holdervector.y);
+	*/
+	}
+
 };
+
 
 #endif

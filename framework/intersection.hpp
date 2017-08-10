@@ -24,9 +24,9 @@ public:
 		m_direction{direction},
 		m_distance{distance}{}
 
-	glm::vec3 getPosition(){ return this->m_position;}
-	glm::vec3 getDirection(){ return this->m_direction;}
-	double getDistance(){return this-> m_distance;}
+	glm::vec3 const getPosition(){ return this->m_position;}
+	glm::vec3 const getDirection(){ return this->m_direction;}
+	double const getDistance(){return this-> m_distance;}
 
 };
 

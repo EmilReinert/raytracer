@@ -17,6 +17,10 @@
 #include "sdfloader.hpp"
 #include "light.hpp"
 
+#include "intersection.hpp"
+
+
+
 // ----------------------------------
 // SHAPE TESTS
 // ----------------------------------
@@ -344,10 +348,27 @@ TEST_CASE("vektor normalization", "glm::vec3")
 
 TEST_CASE("light construction", "[lightconstruction]"){
 	Light light1 = Light();
+	Color clr = Color{1.0f,1.0f,1.0f};
+	Light light2 = Light("light2",glm::vec3{0.0f},clr);
+	REQUIRE(light2.getName()=="light2");
+	REQUIRE(light2.getColor()==clr);
+	REQUIRE(light2.getSource()==glm::vec3{0.0f});
 	REQUIRE(light1.getName()=="noname_light");
 	REQUIRE(light1.getColor()==Color());
 	REQUIRE(light1.getSource()==glm::vec3{0.0f});
-
-
 }
+
+// ----------------------------------
+// INTERSECTION Tests
+// ----------------------------------
+
+
+TEST_CASE("intersection constructor","[intersectionconstructor]"){ 
+	Intersection inter1 = Intersection();
+	Intersection inter2 = Intersection(glm::vec3{1.0f},glm::vec3{1.0f},1.0f);
+	//REQUIRE(glm::vec3{1.0f}==glm::vec3(1.0f,1.0f,1.0f));
+	REQUIRE(inter1.getDirection()==glm::vec3{0.0f});
+	REQUIRE(inter2.getDirection()==glm::vec3(1.0f,1.0f,1.0f));	
+}
+
 

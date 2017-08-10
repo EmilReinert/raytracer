@@ -3,6 +3,7 @@
 
 #include "box.hpp"
 
+
 //default constructor unit box
 Box::Box(std::string const& name) :
 	Shape{name, Material{"box_material", Color{0.0f,0.0f,0.0f},
@@ -92,6 +93,7 @@ bool Box::intersect(Ray const& ray, float& distance)
 	//normalize ray
 	Ray nray {ray.m_origin,ray.m_direction};
 	nray.m_direction = glm::normalize(ray.m_direction);
+	
 
 	std::cout << ray << nray;;
 

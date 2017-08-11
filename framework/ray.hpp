@@ -39,12 +39,25 @@ public:
 	Ray(Ray const& ray):m_origin{ray.m_origin},m_direction{ray.m_direction}{}
 	//sets new direction
 	void const setDirection(glm::vec3 const& dir){this->m_direction = dir; }
-	//
+
+	//returns ray length
 	double const getLength(){ 
 		float holder = (this->m_direction.x*this->m_direction.x)+
 				(this->m_direction.y*this->m_direction.y)+
 				(this->m_direction.z*this->m_direction.z);
 		return sqrt(holder);}
+	//returns new ray with length
+	Ray newLength(double const& length){
+		//glm::normalize doesnt work - > own implementation
+		auto lngth = getLength();
+		glm::vec3 normalDirection{m_direction.x/lngth,m_direction.y/lngth,m_direction.z/lngth};
+		Ray rayy(m_origin,normalDirection);
+		auto rayd = rayy.m_direction;
+		glm::vec3 newdirection(length*rayd.x,length*rayd.y,length*rayd.y);
+		rayy.setDirection(newdirection);
+		return rayy;
+		
+}
 	
 };
 

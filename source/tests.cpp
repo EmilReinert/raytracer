@@ -372,7 +372,7 @@ TEST_CASE("ray copy","[raycopy]"){
 	REQUIRE(ray1.m_direction==ray2.m_direction);
 	ray1.setDirection(ray2.m_direction);
 	Ray ray3 {glm::vec3{0.0f},glm::vec3{1.0f}}; 
-	Ray newray3 = newLength(ray1, 8);
+	Ray newray3 = ray1.newLength(8);
 	REQUIRE(newray3.getLength()==Approx(8.0f));
 }
 

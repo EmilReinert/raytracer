@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "ray.hpp"
+#include "intersection.hpp"
 
 
 //For Intersect Methods
@@ -39,8 +40,9 @@ public:
 
 	virtual std::ostream& print (std::ostream& os) const;
 
-	//distance is overwritten with distance between origin and shape
+	//both important for forming of Intersection
 	virtual bool intersect(Ray const& ray, float& distance) = 0;
+	virtual Intersection realintersect(Ray const& ray, float& distance) =0;
 	
 protected:
 	std::string m_name;

@@ -86,6 +86,16 @@ std::ostream& Box::print (std::ostream& os) const
 		<< "\n";
 	return os;
 }
+// returning a ray with "length" length
+
+Ray newLength(Ray const& r, double const& length){
+	Ray rayy(r);
+	glm::vec3 holdervector = glm::normalize(r.m_direction);
+	glm::vec3 newdirection(length*holdervector.x,length*holdervector.y,length*holdervector.y);
+	rayy.setDirection(newdirection);
+	return rayy;
+		
+}
 
 //override intersect
 bool Box::intersect(Ray const& ray, float& distance)

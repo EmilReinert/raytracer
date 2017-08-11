@@ -42,4 +42,6 @@ private:
 	glm::vec3	m_max;
 };
 
+Ray newLength(Ray const& r, double const& length);
+
 #endif //BUW_BOX_HPP

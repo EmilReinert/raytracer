@@ -220,18 +220,8 @@ int main(int argc, char *argv[])
 TEST_CASE("SDFloader test", "[SDFloader]")
 {
 	SDFloader loader{};
-	/*
-	load.sdfLoad("/Users/lissyscholz/Documents/
-		programmiersprachen/raytracer/programmiers./prachen-
-		raytracer/source/material_input.txt")""
-	*/
-	//Scene s1 {};
-
-	//std::string karo_file_path = "/home/karoline/Documents/studium/17_sose/programmiersprachen-aufgabenblatt-6/programmiersprachen-raytracer/source/material_input.txt";
-	//s1 = loader.load(karo_file_path);
-	
 	Scene s2 {};
-	std::string bla = "/bla";
+	std::string bla = "/home/emil/Documents/RAYTRACER/final_program/raytracer/source/material_input.txt";
 	s2 = loader.load(bla);
 }
 
@@ -370,8 +360,20 @@ TEST_CASE("intersection constructor","[intersectionconstructor]"){
 	REQUIRE(inter1.getDirection()==glm::vec3{0.0f});
 	REQUIRE(inter2.getDirection()==glm::vec3(1.0f,1.0f,1.0f));
 	REQUIRE(!inter1.isHit());
-	glm::vec3 vv =glm::vec3{1.0f};
-		auto vvv= glm::normalize(vv);
+	
+}
+//RAY stuff
+
+TEST_CASE("ray copy","[raycopy]"){
+	//REQUIRE(glm::vec3(1.0f,0.0f,0.0f).length()==1.0f); WRONG!
+	
+	Ray ray1 {glm::vec3(1.0f,0.0f,0.0f),glm::vec3{1.0f,1.0f,-1.0f}}; 
+	Ray ray2(ray1);
+	REQUIRE(ray1.m_direction==ray2.m_direction);
+	ray1.setDirection(ray2.m_direction);
+	Ray ray3 {glm::vec3{0.0f},glm::vec3{1.0f}}; 
+	Ray newray3 = newLength(ray1, 8);
+	REQUIRE(newray3.getLength()==Approx(8.0f));
 }
 
 

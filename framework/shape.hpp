@@ -8,13 +8,13 @@
 #include <iostream>
 
 #include "ray.hpp"
-#include "intersection.hpp"
+
 
 
 //For Intersect Methods
 # include <glm/glm.hpp>
 # include <glm/gtx/intersect.hpp>
-
+class Intersection;
 class Shape
 {
 public:
@@ -49,4 +49,49 @@ protected:
 	Material m_material;
 };
 
+#ifndef BUW_HIT_HPP
+#define BUW_HIT_HPP
+#include <iostream>
+#include <glm/vec3.hpp>
+#include <string>
+
+
+
+
+class Intersection{
+	glm::vec3 m_position;
+	glm::vec3 m_direction;
+	double m_distance;
+	bool m_hit;
+	Shape* m_shape=nullptr;
+	
+
+
+public:
+	Intersection():
+		m_position{glm::vec3{0.0f,0.0f,0.0f}},
+		m_direction{glm::vec3{0.0f}},
+		m_distance{0.0f},
+		m_hit{false},
+		m_shape{nullptr}{}
+
+	Intersection(glm::vec3 const&position, glm::vec3 const& direction, double const& distance, bool const & hit, Shape* const shape):
+		m_position{position},
+		m_direction{direction},
+		m_distance{distance},
+		m_hit{hit},
+		m_shape{shape}{}
+
+	glm::vec3 const getPosition(){ return this->m_position;}
+	glm::vec3 const getDirection(){ return this->m_direction;}
+	double const getDistance(){return this-> m_distance;}
+	bool const isHit(){return this->m_hit;}
+	Shape* getShape(){return this->m_shape;}
+
+};
+
+
+
+
+#endif
 #endif //BUW_SHAPE_HPP

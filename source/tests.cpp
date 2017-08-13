@@ -17,8 +17,6 @@
 #include "sdfloader.hpp"
 #include "light.hpp"
 
-#include "intersection.hpp"
-
 
 
 // ----------------------------------
@@ -355,7 +353,7 @@ TEST_CASE("light construction", "[lightconstruction]"){
 
 TEST_CASE("intersection constructor","[intersectionconstructor]"){ 
 	Intersection inter1 = Intersection();
-	Intersection inter2 = Intersection(glm::vec3{1.0f},glm::vec3{1.0f},1.0f,false);
+	Intersection inter2 = Intersection(glm::vec3{1.0f},glm::vec3{1.0f},1.0f,false,nullptr);
 	//REQUIRE(glm::vec3{1.0f}==glm::vec3(1.0f,1.0f,1.0f));
 	REQUIRE(inter1.getDirection()==glm::vec3{0.0f});
 	REQUIRE(inter2.getDirection()==glm::vec3(1.0f,1.0f,1.0f));

@@ -371,9 +371,14 @@ TEST_CASE("ray copy","[raycopy]"){
 	Ray ray2(ray1);
 	REQUIRE(ray1.m_direction==ray2.m_direction);
 	ray1.setDirection(ray2.m_direction);
-	Ray ray3 {glm::vec3{0.0f},glm::vec3{1.0f}}; 
 	Ray newray3 = ray1.newLength(8);
 	REQUIRE(newray3.getLength()==Approx(8.0f));
+	//winkel
+	Ray ray3 {glm::vec3{0.0f},glm::vec3{0.0f,0.0f,-1.0f}}; 
+	Ray ray4 {glm::vec3{0.0f},glm::vec3{1.0f,0.0f,0.0f}};
+	float winkel= ray3.rayWinkel(ray4);
+	REQUIRE(winkel==Approx(90));
+	
 }
 
 

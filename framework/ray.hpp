@@ -9,6 +9,7 @@
 
 
 
+
 struct Ray
 {
 	glm::vec3 m_origin;
@@ -56,10 +57,29 @@ public:
 		glm::vec3 newdirection(length*rayd.x,length*rayd.y,length*rayd.y);
 		rayy.setDirection(newdirection);
 		return rayy;
+	}
+
+	// returns float of ankle between two rays' directions
+	float rayWinkel(Ray const& ray2){ // x/y = |u*v|  /  |u|*|v| = cos(ß)
+		// arccos = acos() // |u|= abs(u)
+		auto u = this->m_direction;
+		auto v = ray2.m_direction;
+		//Skalarprodukt:
+		auto x = abs((u.x*v.x)+(u.y*v.y)+(u.z*v.z));
+		std::cout<<x;
+		//unterm bruch
+		auto y = (sqrt((u.x*u.x)+(u.y*u.y)+(u.z*u.z)) * sqrt((v.x*v.x)+(v.y*v.y)+(v.z*v.z)));
+		std::cout<<y;
+		if (y==0){return -1;}
+		std::cout<<(float)1/3;
+		return acos(x/y)*(180/M_PI);
+	}
+
 		
-}
+
 	
 };
+
 
 
 #endif

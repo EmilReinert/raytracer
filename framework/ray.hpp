@@ -65,7 +65,7 @@ public:
 		auto u = this->m_direction;
 		auto v = ray2.m_direction;
 		//Skalarprodukt:
-		auto x = abs((u.x*v.x)+(u.y*v.y)+(u.z*v.z));
+		auto x = (u.x*v.x)+(u.y*v.y)+(u.z*v.z);
 		std::cout<<x;
 		//unterm bruch
 		auto y = (sqrt((u.x*u.x)+(u.y*u.y)+(u.z*u.z)) * sqrt((v.x*v.x)+(v.y*v.y)+(v.z*v.z)));

@@ -66,12 +66,12 @@ public:
 		auto v = ray2.m_direction;
 		//Skalarprodukt:
 		auto x = (u.x*v.x)+(u.y*v.y)+(u.z*v.z);
-		std::cout<<x;
+		
 		//unterm bruch
 		auto y = (sqrt((u.x*u.x)+(u.y*u.y)+(u.z*u.z)) * sqrt((v.x*v.x)+(v.y*v.y)+(v.z*v.z)));
-		std::cout<<y;
+		
 		if (y==0){return -1;}
-		std::cout<<(float)1/3;
+		
 		return acos(x/y)*(180/M_PI);
 	}
 

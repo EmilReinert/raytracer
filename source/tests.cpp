@@ -41,7 +41,7 @@ TEST_CASE("operator<< and print shape","[shape]")
 	
 	Sphere s {"name", Material{"",Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},0.0f},glm::vec3{0.0f},1.0f};
 	std::cout << s;
-//trolololo
+
 }
 
 // ----------------------------------
@@ -231,8 +231,8 @@ TEST_CASE("intersection tests","Box")
 {
 	Color c {0.0f,0.0f,0.0f};
 
-	Ray ray1 {glm::vec3(1.0f,0.0f,0.0f), //from koordinatenursprung
-			glm::vec3{1.0f,1.0f,-1.0f}}; //schräg in -z richtung
+	Ray ray1 {glm::vec3(0.5f,0.5f,1.0f), 
+			glm::vec3{0.0f,0.0f,-4.0f}};
 
 	Ray ray2 {glm::vec3{0.0f}, //aus koordinatenursprung
 			glm::vec3{1.0f,1.0f,-2.0f}}; //schräg in anderem winkel in -z richtung
@@ -257,11 +257,11 @@ TEST_CASE("intersection tests","Box")
 
 	std::cout << box;
 
-	float distance = 0.0f;
-	std::cout << "\n\nray --MUYIMPORTANTE--: \n";
+	float distance = 4.0f;
+	std::cout << "\n\nray -----------MUYIMPORTANTE---------: \n";
 	bool hit = box.intersect(ray1,distance);
 	std::cout << "\nHit? " << hit << " Distance: " << distance;
-
+	
 	distance = 0.0f;
 	std::cout << "\n\nray 2: \n";
 	hit = box.intersect(ray2,distance);
@@ -327,7 +327,20 @@ TEST_CASE("vektor normalization", "glm::vec3")
 	std::cout << "\n" << norm.x << ", " << norm.y
 		<< ", "  << norm.z<<"\n";
 }
-
+// - box realintersection
+TEST_CASE("realintersectt","[realintersectt]"){
+	Ray ray1 {glm::vec3(0.5f,0.5f,2.0f), glm::vec3{0.0f,0.0f,-4.0f}};Color c {0.0f,0.0f,0.0f};
+	
+	Box box {"test_box",
+		Material{"",c,c,c, 0.0f},
+		glm::vec3{0.0f,0.0f,-1.0f},	//min
+		glm::vec3{2.0f,2.0f,-3.0f}	//max
+	};
+	
+	float dist = 4.0f;
+	Intersection inter = box.realintersect(ray1,dist);
+	std::cout<<"\n---SAME BUT DIFFERENT---\n"<<inter;
+}
 
 // ----------------------------------
 // LIGHT Tests
@@ -353,14 +366,24 @@ TEST_CASE("light construction", "[lightconstruction]"){
 
 TEST_CASE("intersection constructor","[intersectionconstructor]"){ 
 	Intersection inter1 = Intersection();
-	Intersection inter2 = Intersection(glm::vec3{1.0f},glm::vec3{1.0f},1.0f,false,nullptr);
+	Sphere s {"SHAPEE NUMERO UNO", Material{"",Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},0.0f},glm::vec3{0.0f},1.0f};
+	Shape *	f = &s;
+	Intersection inter2 = Intersection{glm::vec3{1.0f},glm::vec3{1.0f},1.0f,true,f};//important!
 	//REQUIRE(glm::vec3{1.0f}==glm::vec3(1.0f,1.0f,1.0f));
 	REQUIRE(inter1.getDirection()==glm::vec3{0.0f});
 	REQUIRE(inter2.getDirection()==glm::vec3(1.0f,1.0f,1.0f));
-	REQUIRE(!inter1.isHit());
+	REQUIRE(inter2.isHit());
+	REQUIRE(inter2.getShape()==&s);
+	//INTERSECTION print
+	std::cout<<"\n--------------------ooo---------------------\n"<<inter2;
+	
 	
 }
-//RAY stuff
+
+// ----------------------------------
+// RAY Tests
+// ----------------------------------
+
 
 TEST_CASE("ray copy","[raycopy]"){
 	//REQUIRE(glm::vec3(1.0f,0.0f,0.0f).length()==1.0f); WRONG!

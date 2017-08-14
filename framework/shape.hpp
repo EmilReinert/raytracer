@@ -8,13 +8,16 @@
 #include <iostream>
 
 #include "ray.hpp"
-
+#include <limits>
+#include <math.h>  
+#include <cmath>
+#include <catch.hpp>
 
 
 //For Intersect Methods
 # include <glm/glm.hpp>
 # include <glm/gtx/intersect.hpp>
-class Intersection;
+struct Intersection;
 class Shape
 {
 public:
@@ -58,7 +61,7 @@ protected:
 
 
 
-class Intersection{
+struct Intersection{
 	glm::vec3 m_position;
 	glm::vec3 m_direction;
 	double m_distance;
@@ -88,7 +91,22 @@ public:
 	bool const isHit(){return this->m_hit;}
 	Shape* getShape(){return this->m_shape;}
 
+	//override INTERSECTION print
+	std::ostream& print (std::ostream& os) const{
+		os 	<< "\nHit?: "<<m_hit<<"\nDistance: "<<m_distance<<"\nHit-Shape: "<<m_shape->get_name()<<"\nPosition: "<< "(" << m_position.x << ", " <<m_position.y<< ", " <<m_position.z << ")"
+		<< "\nDirection: " << "(" << m_direction.x << ", " << m_direction.y << ", " << m_direction.z << ")"
+		<< "\n";
+		return os;
+	}
+	friend std::ostream& operator<<(std::ostream& os, Intersection const& i)
+{
+    return i.print(os);
+}
+
+
 };
+//<< for INTERSECTION
+
 
 
 

@@ -70,4 +70,30 @@ bool Sphere::intersect(Ray const& ray, float& distance)
 		m_radius * m_radius,distance);
 }
 //returns the intersection btwn Sphere & Ray
-Intersection Sphere::realintersect(Ray const& ray, float& distance){return Intersection();}
+Intersection Sphere::realintersect(Ray const& ray, float& distance){
+	Intersection inter = Intersection();
+	//is there even an intersection
+	bool hit = intersect(ray,distance);
+	if(hit){return inter;}
+	//geometrie
+	auto a = ray.m_direction;
+	auto b = m_center-ray.m_origin;//ray origin to center
+	float b_length = sqrt((b.x*b.x)+(b.y*b.y)+(b.z*b.z));
+	float sklr = a.x*b.x+a.y+b.y+a.z*b.z;//a°b
+	float lng = a.x*a.x+a.y+a.y+a.z*a.z ;// |a|*|a|
+	float fktr = sklr / lng;
+	glm::vec3 c{a.x*fktr,a.y*fktr,a.z*fktr}; // b projected on ray-direction
+	float c_length = sqrt((c.x*c.x)+(c.y*c.y)+(c.z*c.z));
+	float d_length =sqrt((b_length*b_length)-(c_length*c_length));//midperpendicular to ray-direction //b_length²-c_length² = d_length²
+	float e_length = sqrt((m_radius*m_radius)-(d_length*d_length));
+	float dis =c_length-e_length;
+	inter.m_distance = dis;
+	inter.m_hit = true;
+	inter.m_shape = this;
+	inter.m_position= ray.m_origin+glm::vec3{dis*a.x,dis*a.y,dis*a.z};
+
+
+	return inter;
+	
+
+}

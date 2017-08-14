@@ -87,6 +87,14 @@ TEST_CASE("print sphere","[sphere]")
 	std::cout << s;
 }
 
+TEST_CASE("sphere-realintersection","[spehrerealintersecction]"){
+	Sphere s {"name", Material{"",Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},
+		Color{0.0f,0.0f,0.0f},0.0f},glm::vec3{0.0f,0.0f,-4.0f},1.0f};
+	Ray r{glm::vec3{0.0f},glm::vec3{0.0f,0.0f,1.0f}};
+	float	distance = 5.0f;
+	Intersection inter = s.realintersect(r,distance);
+	std::cout<<"-----lalalalalala-----"<<inter;
+}
 // ----------------------------------
 // BOX TESTS
 // ----------------------------------
@@ -224,7 +232,7 @@ TEST_CASE("SDFloader test", "[SDFloader]")
 }
 
 // ----------------------------------
-// INTERSECTION Tests
+// INTERSECT Tests
 // ----------------------------------
 
 TEST_CASE("intersection tests","Box")

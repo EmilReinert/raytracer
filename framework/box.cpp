@@ -219,8 +219,8 @@ Intersection Box::realintersect(Ray const& ray, float& distance){
 	if(iii.m_hit){
 	
 	iii.m_shape = this;
-	iii.m_position = ray.m_direction;
 	iii.m_distance = holder;
+	iii.m_position = ray.m_origin+glm::vec3{holder*ray.m_direction.x,holder*ray.m_direction.y,holder*ray.m_direction.z};
 	
 	}
 

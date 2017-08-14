@@ -93,7 +93,9 @@ public:
 
 	//override INTERSECTION print
 	std::ostream& print (std::ostream& os) const{
-		os 	<< "\nHit?: "<<m_hit<<"\nDistance: "<<m_distance<<"\nHit-Shape: "<<m_shape->get_name()<<"\nPosition: "<< "(" << m_position.x << ", " <<m_position.y<< ", " <<m_position.z << ")"
+		os 	<< "\nHit?: "<<m_hit<<"\nDistance: "<<m_distance<<"\nHit-Shape: ";
+		if(m_shape==nullptr){ os<<"nullpointer";}else{os<<m_shape->get_name();}
+		os<<"\nPosition: "<< "(" << m_position.x << ", " <<m_position.y<< ", " <<m_position.z << ")"
 		<< "\nDirection: " << "(" << m_direction.x << ", " << m_direction.y << ", " << m_direction.z << ")"
 		<< "\n";
 		return os;

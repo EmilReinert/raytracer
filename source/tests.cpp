@@ -222,6 +222,9 @@ int main(int argc, char *argv[])
   return Catch::Session().run(argc, argv);
 }
 
+// ----------------------------------
+// SDFLOADER Tests
+// ----------------------------------
 
 TEST_CASE("SDFloader test", "[SDFloader]")
 {
@@ -229,6 +232,7 @@ TEST_CASE("SDFloader test", "[SDFloader]")
 	Scene s2 {};
 	std::string bla = "/home/emil/Documents/RAYTRACER/final_program/raytracer/source/material_input.txt";
 	s2 = loader.load(bla);
+	std::cout<<s2;
 }
 
 // ----------------------------------

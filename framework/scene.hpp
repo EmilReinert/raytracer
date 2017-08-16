@@ -28,6 +28,16 @@ struct Scene
 
     //Composites
     //std::vector<Composite> m_composites; 
+
+	std::ostream& print(std::ostream & os)const{
+		if(m_shapes.empty()){os<<"\n----no shapes added yet----\n";}
+		else{int i = 1;
+		for(std::shared_ptr<Shape> shp: m_shapes){os<<"Shape "<<i<<": "<< shp->get_name();i++;}}
+		return os;
+	}
+
+	friend std::ostream& operator<<(std::ostream& os, Scene const& sc)
+		{return sc.print(os);}
 };
 
 #endif //BUW_SCENE_HPP

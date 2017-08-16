@@ -414,4 +414,14 @@ TEST_CASE("ray copy","[raycopy]"){
 	
 }
 
+TEST_CASE("ray spiegel","[rayspiegel]"){
+	Ray ray1 {glm::vec3(0.0f),glm::vec3{1.0f,1.0f,-1.0f}}; 
+	Ray ray2 {glm::vec3(0.0f),glm::vec3{0.0f,0.0f,1.0f}}; 
+	Ray ray3 = ray1.mirror(ray2);
+	REQUIRE(ray3.m_direction.x==Approx(-1.0f));
+	REQUIRE(ray3.m_direction.y==Approx(-1.0f));
+	REQUIRE(ray3.m_direction.z==Approx(1.0f));
+	std::cout<<"\n------------mirrorray-----------\n"<<ray3<<"\n";
+}
+
 

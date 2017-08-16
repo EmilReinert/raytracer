@@ -82,7 +82,7 @@ Intersection Sphere::realintersect(Ray const& ray, float& distance){
 	float sklr = a.x*b.x+a.y+b.y+a.z*b.z;//a°b
 	float lng = a.x*a.x+a.y+a.y+a.z*a.z ;// |a|*|a|
 	float fktr = sklr / lng;
-	glm::vec3 c{a.x*fktr,a.y*fktr,a.z*fktr}; // b projected on ray-direction
+	glm::vec3 c{a.x*fktr,a.y*fktr,a.z*fktr}; // b projected on a (ray-direction)
 	float c_length = sqrt((c.x*c.x)+(c.y*c.y)+(c.z*c.z));
 	float d_length =sqrt((b_length*b_length)-(c_length*c_length));//midperpendicular to ray-direction //b_length²-c_length² = d_length²
 	float e_length = sqrt((m_radius*m_radius)-(d_length*d_length));
@@ -91,7 +91,11 @@ Intersection Sphere::realintersect(Ray const& ray, float& distance){
 	inter.m_hit = true;
 	inter.m_shape = this;
 	inter.m_position= ray.m_origin+glm::vec3{dis*a.x,dis*a.y,dis*a.z};
+	
+	Ray mirrorRay = Ray{inter.m_position,-ray.m_direction};
+	Ray toBeMirrored = Ray{inter.m_position,ray.m_direction};
 
+	inter.m_direction = ray.mirror(mirrorRay).m_direction;
 
 	return inter;
 	

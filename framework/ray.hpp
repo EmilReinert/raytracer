@@ -9,7 +9,6 @@
 
 
 
-
 struct Ray
 {
 	glm::vec3 m_origin;
@@ -74,11 +73,41 @@ public:
 		
 		return acos(x/y)*(180/M_PI);
 	}
-
+	//mirrors Ray on mirrorRay(both with same origin!) and returns that Ray
+	Ray mirror(Ray const& mirrorRay) const{
+		/*//Hilfsebene:
+		glm::vec3 v = crossproduct(m_direction,mirrorRay.m_direction);
+		glm::vec3 n = crossproduct(v,mirrorRay.m_direction); //Normalvector
+			//Normalengleichung
+		float ende = (n.x*m_origin.x)+(n.y*m_origin.y)+(n.y*m_origin.y);
+		//Hilfsgerade O+ß*n
+		//Schnittpunkt*/
 		
+		glm::vec3 m = BProjectOnA(m_direction,mirrorRay.m_direction);
+		glm::vec3 sp = m_direction-m;
+		glm::vec3 p_ = m-sp;
+		return Ray{mirrorRay.m_origin,p_};}
+		
+		
+	//returns vector A with length of b projected on a 
+	glm::vec3 BProjectOnA(glm::vec3 const&b,glm::vec3 const& a)const{
+		
+		float b_length = sqrt((b.x*b.x)+(b.y*b.y)+(b.z*b.z));
+		float sklr = a.x*b.x+a.y+b.y+a.z*b.z;//a°b
+		float lng = a.x*a.x+a.y+a.y+a.z*a.z ;// |a|*|a|
+		float fktr = sklr / lng;	
+		return glm::vec3{a.x*fktr,a.y*fktr,a.z*fktr}; }
+
+
+	glm::vec3 crossproduct(glm::vec3 const& a,glm::vec3 const&b){
+		return glm::vec3{a.y*b.z-a.z*b.y,a.z*b.x-a.x-b.z,a.x*b.y-a.y*b.x};}
+
+	float skalarProdukt(glm::vec3 const& a,glm::vec3 const&b){return a.x*b.x+a.y+b.y+a.z*b.z;}
 
 	
 };
+
+
 
 
 

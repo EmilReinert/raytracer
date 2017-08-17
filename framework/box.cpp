@@ -208,13 +208,13 @@ Intersection Box::realintersect(Ray const& ray, float& distance){
 	if(tfar < tnear){
 		iii.m_hit = false;
 		holder = tnear;
-	}
+	}else{
 	if(ttfar < ttnear){
 		iii.m_hit = false;
-		auto holder = ttnear;}
+		holder = ttnear;}
 	else{
 		holder = ttnear;
-		iii.m_hit = true;}
+		iii.m_hit = true;}}
 
 	if(iii.m_hit){
 	
@@ -223,6 +223,14 @@ Intersection Box::realintersect(Ray const& ray, float& distance){
 	iii.m_position = ray.m_origin+glm::vec3{holder*ray.m_direction.x,holder*ray.m_direction.y,holder*ray.m_direction.z};
 	
 	}
+	//on the search for the given plane - normal vector for mirrorVec
+	glm::vec3 n{0.0f};
+	if(iii.m_position.x==m_max.x||iii.m_position.x==m_min.x){n=glm::vec3{1.0f,0.0f,0.0f};}
+	if(iii.m_position.y==m_max.y||iii.m_position.x==m_min.x){n=glm::vec3{0.0f,1.0f,0.0f};}
+	if(iii.m_position.z==m_max.z||iii.m_position.x==m_min.x){n=glm::vec3{0.0f,0.0f,1.0f};}
+	Ray mirrorRay{iii.m_position,n};
+	
+	iii.m_direction = ray.mirror(mirrorRay).m_direction;
 
 	return iii;
 	

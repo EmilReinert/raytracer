@@ -351,7 +351,7 @@ TEST_CASE("realintersectt","[realintersectt]"){
 	
 	float dist = 4.0f;
 	Intersection inter = box.realintersect(ray1,dist);
-	std::cout<<"\n---SAME BUT DIFFERENT---\n"<<inter;
+	std::cout<<"\n---Box Realintersection---\n"<<"\nBox: "<<box<<"\n"<<inter;
 }
 
 // ----------------------------------
@@ -387,7 +387,7 @@ TEST_CASE("intersection constructor","[intersectionconstructor]"){
 	REQUIRE(inter2.isHit());
 	REQUIRE(inter2.getShape()==&s);
 	//INTERSECTION print
-	std::cout<<"\n--------------------ooo---------------------\n"<<inter2;
+	std::cout<<"\n--------------------Intersection print---------------------\n"<<inter2;
 	
 	
 }

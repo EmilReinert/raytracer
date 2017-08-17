@@ -75,6 +75,7 @@ public:
 	}
 	//mirrors Ray on mirrorRay(both with same origin!) and returns that Ray
 	Ray mirror(Ray const& mirrorRay) const{
+		if(mirrorRay.m_direction==glm::vec3{0.0f}||m_direction==glm::vec3{0.0f}){return Ray{glm::vec3{0.0f},glm::vec3{0.0f}};}
 		/*//Hilfsebene:
 		glm::vec3 v = crossproduct(m_direction,mirrorRay.m_direction);
 		glm::vec3 n = crossproduct(v,mirrorRay.m_direction); //Normalvector

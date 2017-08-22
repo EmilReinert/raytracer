@@ -27,7 +27,7 @@ public:
 	// << Output Operator
   	  friend std::ostream& operator<<(std::ostream& os, Ray const& ray)
    	 {
-    	    os  << "\norigin: " << ray.m_origin.x << ", "
+    	    os <<"\nRay: \n" << "\norigin: " << ray.m_origin.x << ", "
         	<< ray.m_origin.y <<", "
         	<< ray.m_origin.z
         	<< "\ndirection: " << ray.m_direction.x << ", "
@@ -41,13 +41,13 @@ public:
 	void const setDirection(glm::vec3 const& dir){this->m_direction = dir; }
 
 	//returns ray length
-	double const getLength(){ 
+	double getLength() const { 
 		float holder = (this->m_direction.x*this->m_direction.x)+
 				(this->m_direction.y*this->m_direction.y)+
 				(this->m_direction.z*this->m_direction.z);
 		return sqrt(holder);}
 	//returns new ray with length
-	Ray newLength(double const& length){
+	Ray newLength(double const& length)const{
 		//glm::normalize doesnt work - > own implementation
 		auto lngth = getLength();
 		glm::vec3 normalDirection{m_direction.x/lngth,m_direction.y/lngth,m_direction.z/lngth};
@@ -104,6 +104,11 @@ public:
 		return glm::vec3{a.y*b.z-a.z*b.y,a.z*b.x-a.x-b.z,a.x*b.y-a.y*b.x};}
 
 	float skalarProdukt(glm::vec3 const& a,glm::vec3 const&b){return a.x*b.x+a.y+b.y+a.z*b.z;}
+	glm::vec3 getInvDir()const{float xx,yy,zz;
+		if(m_direction.x==0){xx=0;}else{xx=1/m_direction.x;}
+		if(m_direction.y==0){yy=0;}else{yy=1/m_direction.y;}
+		if(m_direction.z==0){zz=0;}else{zz=1/m_direction.z;}
+		return glm::vec3{xx,yy,zz};}
 
 	
 };

@@ -158,71 +158,44 @@ bool Box::intersect(Ray const& ray, float& distance)
 Intersection Box::realintersect(Ray const& ray, float& distance){ 
 	Intersection iii = Intersection();
     //normalize ray
-	Ray nray {ray.m_origin,ray.m_direction};
-	nray.m_direction = glm::normalize(ray.m_direction);
-	
+	    Ray ray1 = ray.newLength(distance);
 
-	std::cout << ray << nray;;
+	    glm::vec3 inverse = ray1.getInvDir();
 
-	bool hit = false;
+	    float t0 = (m_min.x - ray1.m_origin.x) * inverse.x;
+	    float t1 = (m_max.x - ray1.m_origin.x) * inverse.x;
+	    float tmin = std::min(t0, t1);
+	    float tmax = std::max(t0, t1);
 
-	//Parallelität zu Achsen
+	    t0 = (m_min.y - ray1.m_origin.y) * inverse.y;
+	    t1 = (m_max.y - ray1.m_origin.y) * inverse.y;
+	    tmin = std::max(tmin, std::min(t0, t1));
+	    tmax = std::min(tmax, std::max(t0, t1));
 
-	//Alle Schnittpunkte mit Flächen durch Seiten der Box
+	    t0 = (m_min.z - ray1.m_origin.z) * inverse.z;
+	    t1 = (m_max.z - ray1.m_origin.z) * inverse.z;
+	    tmin = std::max(tmin, std::min(t0, t1));
+	    tmax = std::min(tmax, std::max(t0, t1));
 
-/* NOTE: statt direction 1/direction verwenden, da sonst bei ray direction = 0
-	ein Fehler auftritt?!
-	http://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection */
 
-	float t0x = (m_min.x - nray.m_origin.x) / nray.m_direction.x;
-	float t1x = (m_max.x - nray.m_origin.x) / nray.m_direction.x;
 
-	float t0y = (m_min.y - nray.m_origin.y) / nray.m_direction.y;
-	float t1y = (m_max.y - nray.m_origin.y) / nray.m_direction.y;
+    if(tmax > std::max(tmin, 0.0f))
+    {
+        iii.m_hit = true;
+        iii.m_distance = sqrt(tmin * tmin *
+                (ray1.m_direction.x * ray1.m_direction.x + 
+                ray1.m_direction.y * ray1.m_direction.y + 
+                ray1.m_direction.z * ray1.m_direction.z));
+	}
 
-	float t0z = (m_min.z - nray.m_origin.z) / nray.m_direction.z;
-	float t1z = (m_max.z - nray.m_origin.z) / nray.m_direction.z;
-
-	//far und near Schnittpunkte mit Flächen durch Seiten der Box
-	float tx_far = std::max(t0x,t1x);
-	float tx_near = std::min(t0x,t1x);
-
-	float ty_far = std::max(t0y,t1y);
-	float ty_near = std::min(t0y,t1y);
-
-	float tz_far = std::max(t0z,t1z);
-	float tz_near = std::min(t0z,t1z);
-
-	//Schnittpunkte mit Ebenen, die auf der Box liegen
-	float tfar = std::min(tx_far, ty_far);
-	float tnear = std::max(tx_near, ty_near);
-
-	//Wenn der Schnittpunkt mit der weiter entfernten Seite kleiner ist,
-	//wird Box nicht von ray getroffen
-	
-	//Betrachtung in 3D
-	float ttfar = std::min(tfar, tz_far);
-	float ttnear = std::max(tnear, tz_near);
-
-	float holder=12339.0f;
-	if(tfar < tnear){
-		iii.m_hit = false;
-		holder = tnear;
-	}else{
-	if(ttfar < ttnear){
-		iii.m_hit = false;
-		holder = ttnear;}
-	else{
-		holder = ttnear;
-		iii.m_hit = true;}}
 
 	if(iii.m_hit){
 	
 	iii.m_shape = this;
-	iii.m_distance = holder;
-	iii.m_position = ray.m_origin+glm::vec3{holder*ray.m_direction.x,holder*ray.m_direction.y,holder*ray.m_direction.z};
+
+	iii.m_position = ray.m_origin+glm::vec3{iii.m_distance*ray.m_direction.x,iii.m_distance*ray.m_direction.y,iii.m_distance*ray.m_direction.z};
 	
-	}
+	
 	//on the search for the given plane - normal vector for mirrorVec
 	glm::vec3 n{0.0f};
 	if(iii.m_position.x==m_max.x||iii.m_position.x==m_min.x){n=glm::vec3{1.0f,0.0f,0.0f};}
@@ -231,7 +204,7 @@ Intersection Box::realintersect(Ray const& ray, float& distance){
 	Ray mirrorRay{iii.m_position,n};
 	
 	iii.m_direction = ray.mirror(mirrorRay).m_direction;
-
+	}
 	return iii;
 	
 }

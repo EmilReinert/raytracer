@@ -8,6 +8,7 @@
 #include <memory>
 #include "material.hpp"
 #include "shape.hpp"
+#include "light.hpp"
 
 struct Scene
 {
@@ -15,10 +16,10 @@ struct Scene
     //Camera m_camera;
 
     //Ambient Light
-    //Light m_ambient_light;
+    Light m_ambient_light;
 
     //Lights
-    //std::vector<Light> m_lights;
+    std::vector<std::shared_ptr<Light>> m_lights;
 
     //Materials
     std::vector<Material> m_materials;
@@ -30,9 +31,14 @@ struct Scene
     //std::vector<Composite> m_composites; 
 
 	std::ostream& print(std::ostream & os)const{
+		//if (m_ambient_light == nullptr){os<<"\n----no shapes added yet----\n";} else{os<<"\nAmbient Light: "<<m_ambient-light;}
+		if(m_lights.empty()){os<<"\n----no lights added yet----\n";}
+		else{int i = 1;
+		for(std::shared_ptr<Light> lght: m_lights)
+			{os<<"\nLight "<<i<<": "<< lght->getName();i++;}}
 		if(m_shapes.empty()){os<<"\n----no shapes added yet----\n";}
 		else{int i = 1;
-		for(std::shared_ptr<Shape> shp: m_shapes){os<<"Shape "<<i<<": "<< shp->get_name();i++;}}
+		for(std::shared_ptr<Shape> shp: m_shapes){os<<"\nShape "<<i<<": "<< shp->get_name();i++;}}
 		return os;
 	}
 

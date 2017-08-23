@@ -5,9 +5,32 @@
 #include <thread>
 #include <utility>
 #include <cmath>
+#include "sdfloader.hpp"
+#include "light.hpp"
+#include <memory>
+
+#include "sphere.hpp"
+#include "box.hpp"
+
 
 int main(int argc, char* argv[])
 {
+//////// Beispielscene 
+	SDFloader loader{};
+	Scene scene {};
+	std::string bla = "/home/emil/Documents/RAYTRACER/final_program/raytracer/source/material_input.txt";
+	scene = loader.load(bla);
+	//light
+	Light light1{"light1",glm::vec3{10.0f,10.0f, 0.0f},Color{1.0f,1.0f,1.0f}};
+	scene.m_lights.push_back(std::make_shared<Light>(light1));
+	//shape
+	Sphere sphere1{"sphere1", Material{"weiß",Color{1.0f,1.0f,1.0f},Color{1.0f,1.0f,1.0f},
+		Color{1.0f,1.0f,1.0f},1.0f},glm::vec3{0.0f,0.0f,-10.0f},3.0f};
+	scene.m_shapes.push_back(std::make_shared<Sphere>(sphere1));
+	std::cout<<scene;
+////////
+
+	
   unsigned const width = 800;
   unsigned const height = 600;
   std::string const filename = "./checkerboard.ppm";

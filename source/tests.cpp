@@ -431,7 +431,7 @@ TEST_CASE("blablacamera","[yoloo]"){
 	Camera cam = Camera();
 	float cc= cam.getDirection().z;
 	REQUIRE(cc==Approx(-1));
-	
+	std::cout <<cam;
 
 }
 

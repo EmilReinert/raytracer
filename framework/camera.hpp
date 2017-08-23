@@ -26,6 +26,15 @@ public:
 	glm::vec3 getDirection() const;
 	glm::vec3 getUp() const;
 	
+	friend std::ostream& operator<<(std::ostream& os, Camera const& cam)
+   	 {
+    	    os <<"\nCamera: "<<cam.m_name;
+		os<<"\nFov: "<<cam.m_fov;
+		os<<"\nPostion: ("<<cam.m_position.x << ", "<< cam.m_position.y  <<", "<< cam.m_position.z <<")";
+		os<<"\nDirection: ("<<cam.m_direction.x << ", "<< cam.m_direction.y <<", "<< cam.m_direction.z<<")";
+		os<<"\nUp-Vector: ("<<cam.m_up.x << ", "<< cam.m_up.y <<", "<< cam.m_up.z<<")";
+        return os;
+    }
 
 
 

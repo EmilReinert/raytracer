@@ -16,7 +16,7 @@
 #include "scene.hpp"
 #include "sdfloader.hpp"
 #include "light.hpp"
-
+#include "camera.hpp"
 
 
 // ----------------------------------
@@ -423,5 +423,15 @@ TEST_CASE("ray spiegel","[rayspiegel]"){
 	REQUIRE(ray3.m_direction.z==Approx(1.0f));
 	std::cout<<"\n------------mirrorray-----------\n"<<ray3<<"\n";
 }
+// ----------------------------------
+// CAMERA Tests
+// ----------------------------------
 
+TEST_CASE("blablacamera","[yoloo]"){
+	Camera cam = Camera();
+	float cc= cam.getDirection().z;
+	REQUIRE(cc==Approx(-1));
+	
+
+}
 

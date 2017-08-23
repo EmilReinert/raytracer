@@ -47,9 +47,8 @@ void Renderer::render()
 	p.color = casted.raytrace();
 
 */
-	//default
-	p.color = Color{1.0,1.0,1.0};
-      write(p);
+	//´default 
+	p.color = Color{1.0,1.0,1.0}; write(p);
     }
   }
   ppm_.save(filename_);

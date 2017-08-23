@@ -18,7 +18,7 @@
 #include <glm/glm.hpp>
 #include "scene.hpp"
 #include "shape.hpp"
-
+#include "color.hpp"
 
 class Renderer
 {
@@ -33,6 +33,8 @@ public:
   {
     return colorbuffer_;
   }
+
+
 
 private:
   unsigned width_;

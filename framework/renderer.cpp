@@ -34,12 +34,21 @@ void Renderer::render()
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
       Pixel p(x,y);
-      if ( ((x/checkersize)%2) != ((y/checkersize)%2)) {
+      /*
+	/// gitter muster
+	
+	if ( ((x/checkersize)%2) != ((y/checkersize)%2)) {
         p.color = Color(0.0, 1.0, float(x)/height_);
       } else {
         p.color = Color(1.0, 0.0, float(y)/width_);
-      }
+      }*/
+/*
+	Ray casted{0.0f,-1.0f};
+	p.color = casted.raytrace();
 
+*/
+	//default
+	p.color = Color{1.0,1.0,1.0};
       write(p);
     }
   }

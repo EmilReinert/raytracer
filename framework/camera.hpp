@@ -4,8 +4,10 @@
 #include <glm/vec3.hpp>
 #include "color.hpp"
 #include <string>
-
-
+#include "ray.hpp"
+#include <cmath>
+#include "math.h"
+#include "pixel.hpp"
 
 class Camera{
 
@@ -35,6 +37,8 @@ public:
 		os<<"\nUp-Vector: ("<<cam.m_up.x << ", "<< cam.m_up.y <<", "<< cam.m_up.z<<")";
         return os;
     }
+
+	Ray castRay(Pixel const& pix, int resolution_x, int resolution_y )const;
 
 
 

@@ -19,6 +19,7 @@
 #include "scene.hpp"
 #include "shape.hpp"
 #include "color.hpp"
+#include "camera.hpp"
 
 class Renderer
 {
@@ -33,7 +34,8 @@ public:
   {
     return colorbuffer_;
   }
-
+  
+  std::shared_ptr<Shape> const findShape(Ray const&ray,float distances);
 
 
 private:

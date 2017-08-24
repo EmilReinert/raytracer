@@ -96,7 +96,7 @@
 		if(m_direction.z==0){zz=0;}else{zz=1/m_direction.z;}
 		return glm::vec3{xx,yy,zz};}
 
-	
+	Color const Ray::raytrace(){return Color{0.0,1.0,1.0};}
 
 
 

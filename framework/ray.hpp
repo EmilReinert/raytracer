@@ -7,7 +7,7 @@
 #include <glm/vec3.hpp>
 #include <cmath>
 #include <iostream>
-
+#include "color.hpp"
 
 
 struct Ray
@@ -60,7 +60,7 @@ public:
 
 	float skalarProdukt(glm::vec3 const& a,glm::vec3 const&b);
 
-	
+	Color const raytrace();
 };
 
 

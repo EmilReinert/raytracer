@@ -42,16 +42,15 @@ void Renderer::render()
       } else {
         p.color = Color(1.0, 0.0, float(y)/width_);
       }*/
-	float distance = 1000;
-	Ray casted{glm::vec3{0.0f},glm::vec3{x,y,-distance}};
-	auto shape_ptr = findShape(casted,100);
+
+	Ray casted=cam.castRay(p,width_,height_);
+	float distance = 100;
+	auto shape_ptr = findShape(casted,distance);
 	std::cout<<(bool)shape_ptr;
-	//std::cout<<casted;
-
-
-
-	//´default  	
-	p.color = Color{1.0,1.0,1.0}; write(p);
+	if(shape_ptr){p.color = shape_ptr->get_material().m_ka; }
+	else{p.color = Color{0.1,0.1,0.1};}
+		
+	write(p);
     }
   }
   ppm_.save(filename_);
@@ -76,7 +75,9 @@ void Renderer::write(Pixel const& p)
 
 std::shared_ptr<Shape> const Renderer::findShape(Ray const&ray, float distance){
 	for(std::shared_ptr<Shape> shp: scene_.m_shapes){ 
-		if(shp->realintersect(ray,distance).isHit()){return shp;}}
+		if(!shp->realintersect(ray,distance).isHit()){
+			distance = shp->realintersect(ray,distance).getDistance(); 
+			return shp;}}
 	return 0;
 }
 

@@ -392,6 +392,15 @@ TEST_CASE("intersection constructor","[intersectionconstructor]"){
 	
 }
 
+TEST_CASE("anotherintersectreal","[blub]"){
+	Sphere sphere1{"sphere1", Material{"weiß",Color{1.0f,0.0f,0.0f},Color{1.0f,1.0f,1.0f},
+		Color{1.0f,1.0f,1.0f},1.0f},glm::vec3{12.0f,12.0f,-90.0f},10.0f};
+	Ray rr{glm::vec3(0.0f),glm::vec3{12.0f,12.0f,-90.0f}};
+	float distance = 120;
+	Intersection inter = sphere1.realintersect(rr,distance);
+	std::cout<<"\n--------------------------------------FAILURE. LIKE MY LIFE   MUST FIX-------------\n"<<inter;
+}
+
 // ----------------------------------
 // RAY Tests
 // ----------------------------------

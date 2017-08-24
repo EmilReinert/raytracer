@@ -23,10 +23,15 @@ int main(int argc, char* argv[])
 	//light
 	Light light1{"light1",glm::vec3{10.0f,10.0f, 0.0f},Color{1.0f,1.0f,1.0f}};
 	scene.m_lights.push_back(std::make_shared<Light>(light1));
-	//shape
-	Sphere sphere1{"sphere1", Material{"weiß",Color{1.0f,1.0f,1.0f},Color{1.0f,1.0f,1.0f},
-		Color{1.0f,1.0f,1.0f},1.0f},glm::vec3{0.0f,0.0f,-100.0f},3.0f};
+	//shapes
+	Sphere sphere1{"sphere1", Material{"weiß",Color{1.0f,0.0f,0.0f},Color{1.0f,1.0f,1.0f},
+		Color{1.0f,1.0f,1.0f},1.0f},glm::vec3{9.0f,9.0f,-90.0f},10.0f};
 	scene.m_shapes.push_back(std::make_shared<Sphere>(sphere1));
+	
+	Sphere sphere2{"sphere2", Material{"weiß",Color{1.0f,1.0f,1.0f},Color{1.0f,1.0f,1.0f},
+		Color{1.0f,1.0f,1.0f},1.0f},glm::vec3{3.0f,3.0f,-90.0f},10.0f};
+	scene.m_shapes.push_back(std::make_shared<Sphere>(sphere2));
+	
 	std::cout<<scene;
 ////////
 

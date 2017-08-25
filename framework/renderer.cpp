@@ -30,10 +30,11 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file, Scene const&
 void Renderer::render()
 {
   const std::size_t checkersize = 20;
-	Camera cam{"camera1",90};
+	Camera cam{"camera1",20};
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
       Pixel p(x,y);
+	
       /*
 	/// gitter muster
 	
@@ -41,14 +42,31 @@ void Renderer::render()
         p.color = Color(0.0, 1.0, float(x)/height_);
       } else {
         p.color = Color(1.0, 0.0, float(y)/width_);
-      }*/
+      }
 
-	Ray casted=cam.castRay(p,width_,height_);
+	
+*/
+	Ray casted=cam.castRay(x,y,width_,height_);
 	float distance = 100;
+	
 	auto shape_ptr = findShape(casted,distance);
-	std::cout<<(bool)shape_ptr;
-	if(shape_ptr){p.color = shape_ptr->get_material().m_ka; }
+	
+	//if(shape_ptr){std::cout<<shape_ptr->get_name();}else{std::cout<<"0";}
+	if(shape_ptr){
+		distance = shape_ptr->realintersect(casted,distance).getDistance();
+		std::cout<<distance<<"-";
+		if(distance>1){p.color = shape_ptr->get_material().m_ka*(distance-70)*0.01;}
+		else{p.color = Color{0.0,0.0,0.0};}
+		}
 	else{p.color = Color{0.1,0.1,0.1};}
+	
+	//default
+	/*
+	float distance = 1000;
+	Ray casted{glm::vec3{0.0f},glm::vec3{x,y,-distance}};
+	std::cout<<casted;
+	auto shape_ptr = findShape(casted,100);
+	if(shape_ptr){p.color = Color{1.0,1.0,1.0};}*/
 		
 	write(p);
     }
@@ -75,8 +93,7 @@ void Renderer::write(Pixel const& p)
 
 std::shared_ptr<Shape> const Renderer::findShape(Ray const&ray, float distance){
 	for(std::shared_ptr<Shape> shp: scene_.m_shapes){ 
-		if(!shp->realintersect(ray,distance).isHit()){
-			distance = shp->realintersect(ray,distance).getDistance(); 
+		if(shp->realintersect(ray,distance).isHit()){ 
 			return shp;}}
 	return 0;
 }

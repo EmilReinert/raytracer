@@ -70,12 +70,13 @@ bool Sphere::intersect(Ray const& ray, float& distance)
 		m_radius * m_radius,distance);
 }
 //returns the intersection btwn Sphere & Ray
-Intersection Sphere::realintersect(Ray const& ray, float& distance){
+Intersection Sphere::realintersect(Ray const& rayy, float& distance){
 	Intersection inter = Intersection();
 	//is there even an intersection
-	bool hit = intersect(ray,distance);
-	if(!hit){return inter;}
+	bool hit = intersect(rayy,distance);
+	if( !hit){return inter;}
 	//geometrie
+	Ray ray{rayy.m_origin,glm::normalize(rayy.m_direction)};
 	auto a = ray.m_direction;
 	auto b = m_center-ray.m_origin;//ray origin to center
 	float b_length = sqrt((b.x*b.x)+(b.y*b.y)+(b.z*b.z));

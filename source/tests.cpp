@@ -394,11 +394,12 @@ TEST_CASE("intersection constructor","[intersectionconstructor]"){
 
 TEST_CASE("anotherintersectreal","[blub]"){
 	Sphere sphere1{"sphere1", Material{"weiß",Color{1.0f,0.0f,0.0f},Color{1.0f,1.0f,1.0f},
-		Color{1.0f,1.0f,1.0f},1.0f},glm::vec3{12.0f,12.0f,-90.0f},10.0f};
-	Ray rr{glm::vec3(0.0f),glm::vec3{12.0f,12.0f,-90.0f}};
+		Color{1.0f,1.0f,1.0f},1.0f},glm::vec3{0.0f,-100.0f,-90.0f},50.0f};
+	
+	Ray rr{glm::vec3(0.0f),glm::vec3{-10.0f,-62.0f,-120.0f}};
 	float distance = 120;
 	Intersection inter = sphere1.realintersect(rr,distance);
-	std::cout<<"\n--------------------------------------FAILURE. LIKE MY LIFE   MUST FIX-------------\n"<<inter;
+	std::cout<<"\n-------------------intersec hhhh-------------\n"<<sphere1.intersect(rr,distance)<<inter;
 }
 
 // ----------------------------------

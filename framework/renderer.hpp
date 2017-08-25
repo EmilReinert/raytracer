@@ -36,6 +36,7 @@ public:
   }
   
   std::shared_ptr<Shape> const findShape(Ray const&ray,float distances);
+ 
 
 
 private:

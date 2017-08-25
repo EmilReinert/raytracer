@@ -38,7 +38,7 @@ public:
         return os;
     }
 
-	Ray castRay(Pixel const& pix, int resolution_x, int resolution_y )const;
+	Ray castRay(int const x,int const y, int const resolution_x, int const resolution_y )const;
 
 
 

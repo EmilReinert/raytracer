@@ -34,21 +34,32 @@
 	glm::vec3 Camera::getUp() const{return this-> m_up;}
 
 	//retuns Ray which directis do a certain Pixel starting at camera.m_position
-	Ray Camera::castRay(Pixel const& pix, int resolution_x, int resolution_y )const{
+	Ray Camera::castRay(int x, int y, int resolution_x, int resolution_y )const{
 		/*float x = pix.x/resolution_x;
 		float y = pix.y/resolution_y;
 		float z = -(0.5/tan(m_fov/2*M_PI/360));
 		glm::vec3 ray_direction{x,y,z};
-		return Ray(m_position,ray_direction);*/
+		return Ray(m_position,ray_direction);
+
+		float distance = 1000;
+		glm::vec3 direction = glm::vec3{pix.x/2,pix.y,-distance};
+		return Ray{glm::vec3{0.0f},direction};*/
 		
-		float distance = 1000; 	return Ray{glm::vec3{0.0f},glm::vec3{pix.x/2,pix.y,-distance}};
-		
-		//hier aufgehört 
-		/*float x = resolution_x-pix.x/2;
-		float y= resolution_y-pix.y/2;
-		float z = 1000;
-		glm::vec3 ray_direction{x,y,z};
-		return Ray(m_position,ray_direction);*/
+		float zz = -120;
+		float xx,yy;
+		if(x>=(resolution_x/2)){
+			xx = x-resolution_x/2;}
+		else{
+			xx = -1*((resolution_x/2)-x);//std::cout<<"-"<<resolution_x<<"-"<<x<<"-"<<xx<<"-";
+}
+		if(y>=(resolution_y/2)){
+			yy = y-resolution_y/2;}
+		else{
+			yy = -1*((resolution_y/2)-y);//std::cout<<"-"<<resolution_y<<"-"<<y<<"-"<<yy<<"-";
+}
+		glm::vec3 ray_direction{xx,yy,zz};
+		return Ray{m_position,ray_direction};
+
 
 	}
 

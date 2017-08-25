@@ -74,7 +74,7 @@ Intersection Sphere::realintersect(Ray const& ray, float& distance){
 	Intersection inter = Intersection();
 	//is there even an intersection
 	bool hit = intersect(ray,distance);
-	if(hit){return inter;}
+	if(!hit){return inter;}
 	//geometrie
 	auto a = ray.m_direction;
 	auto b = m_center-ray.m_origin;//ray origin to center

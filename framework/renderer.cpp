@@ -46,27 +46,30 @@ void Renderer::render()
 
 	
 */
+
 	Ray casted=cam.castRay(x,y,width_,height_);
 	float distance = 100;
+	float distance_to_object;
+	for(std::shared_ptr<Shape> shp: scene_.m_shapes){ 
+		Intersection inter = shp->realintersect(casted,distance);
+		if(inter.isHit()){
+			Shape* shape_ptr;
+			if(inter.getDistance()>distance_to_object){
+				distance_to_object = inter.getDistance();
+				shape_ptr = inter.getShape();}
+			if(isLight(inter)){p.color= shape_ptr->get_material().m_ka;}
+				else{p.color= Color {0.0,0.0,0.0};}//background
+		}
+		else{p.color = Color{0.1,0.1,0.1};}
+	}
+
 	
-	auto shape_ptr = findShape(casted,distance);
-	
-	//if(shape_ptr){std::cout<<shape_ptr->get_name();}else{std::cout<<"0";}
+	/*
 	if(shape_ptr){
 		distance = shape_ptr->realintersect(casted,distance).getDistance();
-//		std::cout<<distance<<"-";
-		if(distance>1){p.color = shape_ptr->get_material().m_ka*(distance-70)*0.008;}
-		else{p.color = Color{0.0,0.0,0.0};}
-		}
-	else{p.color = Color{0.1,0.1,0.1};}
-	
-	//default
-	/*
-	float distance = 1000;
-	Ray casted{glm::vec3{0.0f},glm::vec3{x,y,-distance}};
-	std::cout<<casted;
-	auto shape_ptr = findShape(casted,100);
-	if(shape_ptr){p.color = Color{1.0,1.0,1.0};}*/
+		std::cout<<distance<<"-";
+		p.color = shape_ptr->get_material().m_ka*(distance-70)*0.008;
+		}*/
 		
 	write(p);
     }
@@ -93,12 +96,20 @@ void Renderer::write(Pixel const& p)
 
 std::shared_ptr<Shape> const Renderer::findShape(Ray const&ray, float distance){
 	for(std::shared_ptr<Shape> shp: scene_.m_shapes){ 
-		if(shp->realintersect(ray,distance).isHit()){ 
+		if(shp->intersect(ray,distance)){ 
 			return shp;}}
 	return 0;
 }
 
-
+bool const Renderer::isLight(Intersection const&inter)const{
+	for(std::shared_ptr<Light> lght: scene_.m_lights){
+		auto point = inter.getPosition();
+		Ray light_ray{point,lght->getSource()-inter.getPosition()};
+		float distance =100000.0f;
+		if(!inter.getShape()->intersect(light_ray,distance)){return true;}
+	return false;}
+ 	return false;
+}
 
 
 

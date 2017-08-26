@@ -61,7 +61,7 @@ std::ostream& Sphere::print (std::ostream& os) const
 	return os;
 }
 //returns if theres an intersection btwn Sphere & Ray
-bool Sphere::intersect(Ray const& ray, float& distance)
+bool Sphere::intersect(Ray const& ray, float& distance)const
 {
 	auto normal_direction = glm::normalize(ray.m_direction);
 	return glm::intersectRaySphere(
@@ -73,7 +73,8 @@ bool Sphere::intersect(Ray const& ray, float& distance)
 Intersection Sphere::realintersect(Ray const& ray, float& distance){
 	Intersection inter = Intersection();
 	//is there even an intersection
-	bool hit = intersect(ray,distance);
+	float holder = distance;
+	bool hit = intersect(ray,holder);
 	if( !hit){return inter;}
 	//geometrie
 	auto a = glm::normalize(ray.m_direction);

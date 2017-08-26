@@ -20,6 +20,7 @@
 #include "shape.hpp"
 #include "color.hpp"
 #include "camera.hpp"
+#include "light.hpp"
 
 class Renderer
 {
@@ -36,7 +37,7 @@ public:
   }
   
   std::shared_ptr<Shape> const findShape(Ray const&ray,float distances);
- 
+  bool const isLight( Intersection const& inter)const;
 
 
 private:

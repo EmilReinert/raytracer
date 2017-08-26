@@ -44,7 +44,7 @@ public:
 	virtual std::ostream& print (std::ostream& os) const;
 
 	//both important for forming of Intersection
-	virtual bool intersect(Ray const& ray, float& distance) = 0;
+	virtual bool intersect(Ray const& ray, float& distance)const = 0;
 	virtual Intersection realintersect(Ray const& ray, float& distance) =0;
 	
 protected:
@@ -85,11 +85,11 @@ public:
 		m_hit{hit},
 		m_shape{shape}{}
 
-	glm::vec3 const getPosition(){ return this->m_position;}
-	glm::vec3 const getDirection(){ return this->m_direction;}
-	double const getDistance(){return this-> m_distance;}
-	bool const isHit(){return this->m_hit;}
-	Shape* getShape(){return this->m_shape;}
+	glm::vec3 const getPosition()const{ return this->m_position;}
+	glm::vec3 const getDirection()const{ return this->m_direction;}
+	double const getDistance()const{return this-> m_distance;}
+	bool const isHit()const{return this->m_hit;}
+	Shape* getShape()const{return this->m_shape;}
 
 	//override INTERSECTION print
 	std::ostream& print (std::ostream& os) const{

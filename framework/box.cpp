@@ -90,7 +90,7 @@ std::ostream& Box::print (std::ostream& os) const
 
 
 //override intersect
-bool Box::intersect(Ray const& ray, float& distance)
+bool Box::intersect(Ray const& ray, float& distance)const
 {
 	//normalize ray
 	Ray nray {ray.m_origin,ray.m_direction};

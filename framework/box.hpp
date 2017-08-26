@@ -35,7 +35,7 @@ public:
 	//override print
 	std::ostream& print (std::ostream& os) const override;
 
-	bool intersect(Ray const& ray, float& distance) override;
+	bool intersect(Ray const& ray, float& distance) const override;
 	Intersection realintersect(Ray const& ray, float& distance) override ;
 
 private:

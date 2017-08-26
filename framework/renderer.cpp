@@ -54,8 +54,8 @@ void Renderer::render()
 	//if(shape_ptr){std::cout<<shape_ptr->get_name();}else{std::cout<<"0";}
 	if(shape_ptr){
 		distance = shape_ptr->realintersect(casted,distance).getDistance();
-		std::cout<<distance<<"-";
-		if(distance>1){p.color = shape_ptr->get_material().m_ka*(distance-70)*0.01;}
+//		std::cout<<distance<<"-";
+		if(distance>1){p.color = shape_ptr->get_material().m_ka*(distance-70)*0.008;}
 		else{p.color = Color{0.0,0.0,0.0};}
 		}
 	else{p.color = Color{0.1,0.1,0.1};}

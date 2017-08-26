@@ -37,7 +37,9 @@ public:
   }
   
   std::shared_ptr<Shape> const findShape(Ray const&ray,float distances);
-  bool const isLight( Intersection const& inter)const;
+  std::shared_ptr<Light> const isLight( Intersection const& inter)const;
+  Color const compute_color(Shape* const& shp, Intersection const & inter);
+  Color const getAmbient(Color const& clr, Intersection const & inter)const;
 
 
 private:

@@ -48,21 +48,19 @@ void Renderer::render()
 */
 
 	Ray casted=cam.castRay(x,y,width_,height_);
-	float distance = 100;
-	float distance_to_object;
+	float distance = 100000;
+	float distance_to_object= 100000000000000000;
+	Shape* shape_ptr;
+	Intersection i;
 	for(std::shared_ptr<Shape> shp: scene_.m_shapes){ 
 		Intersection inter = shp->realintersect(casted,distance);
-		if(inter.isHit()){
-			Shape* shape_ptr;
-			if(inter.getDistance()>distance_to_object){
-				distance_to_object = inter.getDistance();
-				shape_ptr = inter.getShape();}
-			if(isLight(inter)){p.color= shape_ptr->get_material().m_ka;}
-				else{p.color= Color {0.0,0.0,0.0};}//background
+		if(inter.isHit()&&inter.getDistance()< distance_to_object){
+			shape_ptr = inter.getShape();
+			distance_to_object = inter.getDistance();
+			i = inter;
+			
 		}
-		else{p.color = Color{0.1,0.1,0.1};}
 	}
-
 	
 	/*
 	if(shape_ptr){
@@ -70,7 +68,8 @@ void Renderer::render()
 		std::cout<<distance<<"-";
 		p.color = shape_ptr->get_material().m_ka*(distance-70)*0.008;
 		}*/
-		
+	p.color = compute_color(shape_ptr,i);
+	shape_ptr = 0;//IMPORTANT
 	write(p);
     }
   }
@@ -101,16 +100,43 @@ std::shared_ptr<Shape> const Renderer::findShape(Ray const&ray, float distance){
 	return 0;
 }
 
-bool const Renderer::isLight(Intersection const&inter)const{
+std::shared_ptr<Light> const Renderer::isLight(Intersection const&inter)const{
 	for(std::shared_ptr<Light> lght: scene_.m_lights){
 		auto point = inter.getPosition();
-		Ray light_ray{point,lght->getSource()-inter.getPosition()};
+		Ray light_ray{point,lght->getSource()-point};
 		float distance =100000.0f;
-		if(!inter.getShape()->intersect(light_ray,distance)){return true;}
-	return false;}
- 	return false;
+		for(std::shared_ptr<Shape> shp: scene_.m_shapes){ 
+			if(shp->intersect(light_ray,distance)){
+				return lght;
+			}
+		}
+	return 0;}
+ 	return 0;
 }
 
+Color const Renderer::compute_color(Shape* const& shp, Intersection const & inter){
+	if(shp){
+		if(!isLight(inter)){return shp->get_material().m_ka;}
+		else{
+			//AMBIENT
+			return getAmbient(shp->get_material().m_ka,inter);
+		}
+	}
+	return Color{0.5,0.5,0.5};
+	
 
+
+}
+
+Color const Renderer::getAmbient(Color const& clr, Intersection const&inter)const{
+	auto point = inter.getPosition();
+	Ray ambient_ray{point,scene_.m_ambient_light.getSource()-point};
+	float distance =100000.0f;
+	if(!inter.getShape()->intersect(ambient_ray,distance)){
+		auto col =clr;
+		return col-Color{0.5,0.5,0.5};}
+	return Color{0.0,0.0,0.0};
+}
+//Color const Renderer::final_color(Light const& light
 
 

@@ -43,7 +43,7 @@ public:
 	Ray newLength(double const& length)const;
 
 	// returns float of ankle between two rays' directions
-	float rayWinkel(Ray const& ray2);
+	float rayWinkel(glm::vec3 const& vec);
 
 	//mirrors Ray on mirrorRay(both with same origin!) and returns that Ray
 	Ray mirror(Ray const& mirrorRay) const;		

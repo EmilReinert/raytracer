@@ -310,8 +310,8 @@ TEST_CASE("nother test", "intersect")
 
 	Box box{"Zu schneidende Box", Material{},
 		glm::vec3{-2,-2,1}, glm::vec3{2,6,5}};
-	REQUIRE(box.intersect(ray, distance));
-	REQUIRE(distance == 1.0f);
+	REQUIRE(!box.intersect(ray, distance));
+	REQUIRE(distance == 0.0f);
 }
 
 TEST_CASE("no intersection", "intersect")
@@ -382,8 +382,8 @@ TEST_CASE("intersection constructor","[intersectionconstructor]"){
 	Shape *	f = &s;
 	Intersection inter2 = Intersection{glm::vec3{1.0f},glm::vec3{1.0f},1.0f,true,f};//important!
 	//REQUIRE(glm::vec3{1.0f}==glm::vec3(1.0f,1.0f,1.0f));
-	REQUIRE(inter1.getDirection()==glm::vec3{0.0f});
-	REQUIRE(inter2.getDirection()==glm::vec3(1.0f,1.0f,1.0f));
+	REQUIRE(inter1.getNormal()==glm::vec3{0.0f});
+	REQUIRE(inter2.getNormal()==glm::vec3(1.0f,1.0f,1.0f));
 	REQUIRE(inter2.isHit());
 	REQUIRE(inter2.getShape()==&s);
 	//INTERSECTION print
@@ -419,7 +419,7 @@ TEST_CASE("ray copy","[raycopy]"){
 	//winkel
 	Ray ray3 {glm::vec3{0.0f},glm::vec3{0.0f,0.0f,-1.0f}}; 
 	Ray ray4 {glm::vec3{0.0f},glm::vec3{1.0f,0.0f,0.0f}};
-	float winkel= ray3.rayWinkel(ray4);
+	float winkel= ray3.rayWinkel(ray4.m_direction);
 	REQUIRE(winkel==Approx(90));
 	
 }

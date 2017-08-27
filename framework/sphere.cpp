@@ -93,10 +93,7 @@ Intersection Sphere::realintersect(Ray const& ray, float& distance){
 	inter.m_shape = this;
 	inter.m_position= ray.m_origin+glm::vec3{dis*a.x,dis*a.y,dis*a.z};
 	
-	Ray mirrorRay = Ray{inter.m_position,-ray.m_direction};
-	Ray toBeMirrored = Ray{inter.m_position,ray.m_direction};
-
-	inter.m_direction = ray.mirror(mirrorRay).m_direction;
+	inter.m_normal = inter.m_position-m_center;
 
 	return inter;
 	

@@ -63,7 +63,7 @@ protected:
 
 struct Intersection{
 	glm::vec3 m_position;
-	glm::vec3 m_direction;
+	glm::vec3 m_normal;
 	double m_distance;
 	bool m_hit;
 	Shape* m_shape=nullptr;
@@ -73,20 +73,20 @@ struct Intersection{
 public:
 	Intersection():
 		m_position{glm::vec3{0.0f,0.0f,0.0f}},
-		m_direction{glm::vec3{0.0f}},
+		m_normal{glm::vec3{0.0f}},
 		m_distance{0.0f},
 		m_hit{false},
 		m_shape{nullptr}{}
 
-	Intersection(glm::vec3 const&position, glm::vec3 const& direction, double const& distance, bool const & hit, Shape* const shape):
+	Intersection(glm::vec3 const&position, glm::vec3 const&normal, double const& distance, bool const & hit, Shape* const shape):
 		m_position{position},
-		m_direction{direction},
+		m_normal{normal},
 		m_distance{distance},
 		m_hit{hit},
 		m_shape{shape}{}
 
 	glm::vec3 const getPosition()const{ return this->m_position;}
-	glm::vec3 const getDirection()const{ return this->m_direction;}
+	glm::vec3 const getNormal()const{ return this->m_normal;}
 	double const getDistance()const{return this-> m_distance;}
 	bool const isHit()const{return this->m_hit;}
 	Shape* getShape()const{return this->m_shape;}
@@ -96,7 +96,7 @@ public:
 		os 	<< "\nHit?: "<<m_hit<<"\nDistance: "<<m_distance<<"\nHit-Shape: ";
 		if(m_shape==nullptr){ os<<"nullpointer";}else{os<<m_shape->get_name();}
 		os<<"\nPosition: "<< "(" << m_position.x << ", " <<m_position.y<< ", " <<m_position.z << ")"
-		<< "\nDirection: " << "(" << m_direction.x << ", " << m_direction.y << ", " << m_direction.z << ")"
+		<< "\nNormal: " << "(" << m_normal.x << ", " << m_normal.y << ", " << m_normal.z << ")"
 		<< "\n";
 		return os;
 	}

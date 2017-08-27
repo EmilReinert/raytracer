@@ -164,9 +164,7 @@ Intersection Box::realintersect(Ray const& ray, float& distance){
 	if(iii.m_position.x==m_max.x||iii.m_position.x==m_min.x){n=glm::vec3{1.0f,0.0f,0.0f};}
 	if(iii.m_position.y==m_max.y||iii.m_position.x==m_min.x){n=glm::vec3{0.0f,1.0f,0.0f};}
 	if(iii.m_position.z==m_max.z||iii.m_position.x==m_min.x){n=glm::vec3{0.0f,0.0f,1.0f};}
-	Ray mirrorRay{iii.m_position,n};
-	
-	iii.m_direction = ray.mirror(mirrorRay).m_direction;
+	iii.m_normal = n;
 	}
 	return iii;
 	

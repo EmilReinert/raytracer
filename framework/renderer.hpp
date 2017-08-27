@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include "color.hpp"
+#include <vector>
 #include "pixel.hpp"
 #include "ppmwriter.hpp"
 #include <string>
@@ -37,9 +38,12 @@ public:
   }
   
   Intersection const findIntersection(Ray const&ray,float distances);
-  std::shared_ptr<Light> const isLight( Intersection const& inter)const;
+  std::vector<std::shared_ptr<Light>> const isLight( Intersection const& inter)const;
   Color const compute_color(Shape* const& shp, Intersection const & inter);
   Color const getAmbient(Color const& clr, Intersection const & inter)const;
+  Color const normal_intensity(std::vector<std::shared_ptr<Light>> const & lightVec,Intersection const & inter);
+
+
 
 
 private:

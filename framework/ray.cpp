@@ -43,15 +43,15 @@
 	}
 
 	// returns float of ankle between two rays' directions
-	float Ray::rayWinkel(Ray const& ray2){ // x/y = |u*v|  /  |u|*|v| = cos(ß)
+	float Ray::rayWinkel(glm::vec3 const& vec){ // x/y = |u*v|  /  |u|*|v| = cos(ß)
 		// arccos = acos() // |u|= abs(u)
 		auto u = this->m_direction;
-		auto v = ray2.m_direction;
+		auto v = vec;
 		//Skalarprodukt:
 		auto x = (u.x*v.x)+(u.y*v.y)+(u.z*v.z);
-		
+		x =abs(x);
 		//unterm bruch
-		auto y = (sqrt((u.x*u.x)+(u.y*u.y)+(u.z*u.z)) * sqrt((v.x*v.x)+(v.y*v.y)+(v.z*v.z)));
+		auto y = sqrt((u.x*u.x)+(u.y*u.y)+(u.z*u.z)) * sqrt((v.x*v.x)+(v.y*v.y)+(v.z*v.z));
 		
 		if (y==0){return -1;}
 		

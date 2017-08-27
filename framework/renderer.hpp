@@ -36,7 +36,7 @@ public:
     return colorbuffer_;
   }
   
-  std::shared_ptr<Shape> const findShape(Ray const&ray,float distances);
+  Intersection const findIntersection(Ray const&ray,float distances);
   std::shared_ptr<Light> const isLight( Intersection const& inter)const;
   Color const compute_color(Shape* const& shp, Intersection const & inter);
   Color const getAmbient(Color const& clr, Intersection const & inter)const;

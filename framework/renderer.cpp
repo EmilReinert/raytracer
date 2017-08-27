@@ -48,26 +48,10 @@ void Renderer::render()
 */
 
 	Ray casted=cam.castRay(x,y,width_,height_);
-	float distance = 100000;
-	float distance_to_object= 100000000000000000;
-	Shape* shape_ptr;
-	Intersection i;
-	for(std::shared_ptr<Shape> shp: scene_.m_shapes){ 
-		Intersection inter = shp->realintersect(casted,distance);
-		if(inter.isHit()&&inter.getDistance()< distance_to_object){
-			shape_ptr = inter.getShape();
-			distance_to_object = inter.getDistance();
-			i = inter;
-			
-		}
-	}
+	float distance = 100000000;
 	
-	/*
-	if(shape_ptr){
-		distance = shape_ptr->realintersect(casted,distance).getDistance();
-		std::cout<<distance<<"-";
-		p.color = shape_ptr->get_material().m_ka*(distance-70)*0.008;
-		}*/
+	Intersection i = findIntersection(casted, distance);
+	auto shape_ptr = i.getShape();
 	p.color = compute_color(shape_ptr,i);
 	shape_ptr = 0;//IMPORTANT
 	write(p);
@@ -93,11 +77,20 @@ void Renderer::write(Pixel const& p)
 }
 
 
-std::shared_ptr<Shape> const Renderer::findShape(Ray const&ray, float distance){
+Intersection const Renderer::findIntersection(Ray const&ray, float distance){
+	float distance_to_object= 100000000000000000;
+	Shape* shape_ptr;
+	Intersection i;
 	for(std::shared_ptr<Shape> shp: scene_.m_shapes){ 
-		if(shp->intersect(ray,distance)){ 
-			return shp;}}
-	return 0;
+		Intersection inter = shp->realintersect(ray,distance);
+		if(inter.isHit()&&inter.getDistance()< distance_to_object){
+			shape_ptr = inter.getShape();
+			distance_to_object = inter.getDistance();
+			i = inter;
+			
+		}
+	}
+	return i;
 }
 
 std::shared_ptr<Light> const Renderer::isLight(Intersection const&inter)const{
@@ -115,14 +108,18 @@ std::shared_ptr<Light> const Renderer::isLight(Intersection const&inter)const{
 }
 
 Color const Renderer::compute_color(Shape* const& shp, Intersection const & inter){
+	Color clr =  Color{0.5,0.5,0.5};//backgroundcolor
 	if(shp){
-		if(!isLight(inter)){return shp->get_material().m_ka;}
+		Light light_ptr = isLight(inter);
+		if(!light_ptr){
+			shp->get_material().m_ka;}
 		else{
 			//AMBIENT
-			return getAmbient(shp->get_material().m_ka,inter);
+			Color clr = getAmbient(shp->get_material().m_ka,inter);
+			return clr;
 		}
 	}
-	return Color{0.5,0.5,0.5};
+	return clr;
 	
 
 
@@ -131,7 +128,7 @@ Color const Renderer::compute_color(Shape* const& shp, Intersection const & inte
 Color const Renderer::getAmbient(Color const& clr, Intersection const&inter)const{
 	auto point = inter.getPosition();
 	Ray ambient_ray{point,scene_.m_ambient_light.getSource()-point};
-	float distance =100000.0f;
+	float distance =100000000.0f;
 	if(!inter.getShape()->intersect(ambient_ray,distance)){
 		auto col =clr;
 		return col-Color{0.5,0.5,0.5};}

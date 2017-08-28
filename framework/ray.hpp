@@ -61,6 +61,8 @@ public:
 	float skalarProdukt(glm::vec3 const& a,glm::vec3 const&b);
 
 	Color const raytrace();
+	
+	Ray const refractionRay(Ray const& mirror);
 };
 
 

@@ -36,9 +36,6 @@
 		auto lngth = getLength();
 		glm::vec3 normalDirection{m_direction.x/lngth,m_direction.y/lngth,m_direction.z/lngth};
 		Ray rayy(m_origin,normalDirection);
-		auto rayd = rayy.m_direction;
-		glm::vec3 newdirection(length*rayd.x,length*rayd.y,length*rayd.y);
-		rayy.setDirection(newdirection);
 		return rayy;
 	}
 
@@ -74,18 +71,21 @@
 		auto pointP = m_direction-m_origin;
 		auto PS = pointS-pointP;
 		auto P_ = PS+pointS;
-		return Ray{m_origin,P_-m_origin};
+		return Ray{m_origin,P_-m_origin}.newLength(1);
 		}
 		
 		
 	//returns vector A with length of b projected on a 
 	glm::vec3 Ray::BProjectOnA(glm::vec3 const&b,glm::vec3 const& a)const{
-		
+		Ray r = {m_origin,a};
 		float b_length = sqrt((b.x*b.x)+(b.y*b.y)+(b.z*b.z));
-		float sklr = a.x*b.x+a.y*b.y+a.z*b.z;//a°b
-		float lng = a.x*a.x+a.y*a.y+a.z*a.z ;// |a|*|a|
-		float fktr = sklr / lng;	
-		return glm::vec3{a.x*fktr,a.y*fktr,a.z*fktr}; }
+		if(r.rayWinkel(b)==90){return glm::vec3(0.0f);}
+		float ccc = cos(r.rayWinkel(b)/(180/M_PI));
+		//std::cout<<r.rayWinkel(b);
+		float fktr = ccc*b_length;
+		
+		Ray ad = r.newLength(1);
+		return glm::vec3{ad.m_direction.x*fktr,ad.m_direction.y*fktr,ad.m_direction.z*fktr}; }
 
 
 	glm::vec3 Ray::crossproduct(glm::vec3 const& a,glm::vec3 const&b){
@@ -101,7 +101,17 @@
 
 	Color const Ray::raytrace(){return Color{0.0,1.0,1.0};}
 
+	Ray const Ray::refractionRay(Ray const& mirror){
+		int eta = 1;
+		glm::vec3 direction =glm::vec3(0.0f);
+		glm::vec3 N = mirror.m_direction;
+		glm::vec3 I = m_direction;
+		float k = 1.0-eta*eta*(1.0-(((N.x*I.x)+(N.y*I.y)+(N.z*I.z))*((N.x*I.x)+(N.y*I.y)+(N.z*I.z))));
+		if(k>=0.0){
+			direction = glm::vec3{eta*I.x,eta*I.y,eta*I.z}-glm::vec3{(eta*((N.x*I.x)+(N.y*I.y)+(N.z*I.z))+sqrt(k))*N.x,(eta*((N.x*I.x)+(N.y*I.y)+(N.z*I.z))+sqrt(k))*N.y,(eta*((N.x*I.x)+(N.y*I.y)+(N.z*I.z))+sqrt(k))*N.z};
+		}
 
+		return Ray{m_origin,direction};}
 
 
 

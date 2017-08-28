@@ -51,9 +51,7 @@ void Renderer::render()
 	float distance = 100000000;
 	
 	Intersection i = findIntersection(casted, distance);
-	auto shape_ptr = i.getShape();
-	p.color = compute_color(shape_ptr,i);
-	shape_ptr = 0;//IMPORTANT
+	p.color = compute_color(casted,i,3);
 	write(p);
     }
   }
@@ -110,19 +108,21 @@ std::vector<std::shared_ptr<Light>> const Renderer::isLight(Intersection const&i
  	return lightVec;
 }
 
-Color const Renderer::compute_color(Shape* const& shp, Intersection const & inter){
-	if(shp){
-		Color ambient =  getAmbient(shp->get_material().m_ka,inter);
+Color const Renderer::compute_color(Ray const& ray, Intersection const & inter, int depth){
+	if(inter.getShape()){
+		Color clr =  getAmbient(inter.getShape()->get_material().m_ka,inter);//ambient
 		auto light_vec = isLight(inter);
 		if(!light_vec.empty()){
 			//actual in light
 			float intensity_normal = normal_intensity(light_vec,inter);
-			return ambient*intensity_normal+ambient;
+			clr = clr+intensity_normal;
 		}
-		else{
-			//AMBIENT
-			return ambient;
-		}
+		//reflection
+		if (depth>0){
+			Color reflection_clr=reflection(ray,inter,depth);
+			clr = clr+reflection_clr;}
+		
+		return clr;
 	}
 	
 	return Color{0.5,0.5,0.5};//backgroundcolor;
@@ -147,12 +147,23 @@ float const Renderer::normal_intensity(std::vector<std::shared_ptr<Light>> const
 		Ray light_ray{point,lght->getSource()-point};
 		auto a = glm::normalize(light_ray.m_direction);
 		auto b = glm::normalize(inter.getNormal());
-		return a.x*b.x+a.y+b.y+a.z*b.z; 
+		return a.x*b.x+a.y*b.y+a.z*b.z; 
 		
 	}
 	return 0;
 
 }
-//Color const Renderer::final_color(Light const& light
+Color const Renderer::reflection(Ray const & ray,Intersection const & inter, int depth){
+	Ray normalRay{inter.getPosition(),inter.getNormal()};
+	Ray toBeMirrored{inter.getPosition(),-ray.m_direction};
+	Ray mirrorRay= toBeMirrored.mirror(normalRay).newLength(1);
+	float distance = 100000000;
+	Intersection i = findIntersection(mirrorRay, distance);
+	//if(i.getShape()){std::cout<<i<<"\n";}
+	Color clr =compute_color(mirrorRay,i,depth-1);
+	Color untergrenze = Color{0.01,0.01,0.01};
+	return clr*0.5;
+
+}
 
 

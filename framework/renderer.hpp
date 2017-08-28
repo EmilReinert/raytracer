@@ -39,10 +39,10 @@ public:
   
   Intersection const findIntersection(Ray const&ray,float distances);
   std::vector<std::shared_ptr<Light>> const isLight( Intersection const& inter)const;
-  Color const compute_color(Shape* const& shp, Intersection const & inter);
+  Color const compute_color(Ray const&ray, Intersection const & inter, int depth);
   Color const getAmbient(Color const& clr, Intersection const & inter)const;
   float const normal_intensity(std::vector<std::shared_ptr<Light>> const & lightVec,Intersection const & inter);
-
+  Color const reflection(Ray const&ray,Intersection const & inter, int depth);
 
 
 

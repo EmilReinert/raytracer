@@ -80,8 +80,26 @@ struct Color
   {
     return Color(r+fl,b+fl,b+fl);
   }
+bool operator>=(Color const& other)
+  {
+    if(r>=other.r and b>=other.b and g>=other.g)
+      {
+        return true;
+      }
+    else
+      return false;
+  }
+bool operator<=(Color const& other)
+  {
+    if(r<=other.r and b<=other.b and g<=other.g)
+      {
+        return true;
+      }
+    else
+      return false;
+  }
 
-	
+
 	
 };
 

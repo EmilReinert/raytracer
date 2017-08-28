@@ -437,6 +437,19 @@ TEST_CASE("ray spiegel","[rayspiegel]"){
 	REQUIRE(ray3.m_direction.z>0);
 	
 	
+	
+}
+
+TEST_CASE("ray spiegecl","[rayspiegecl]"){
+	Ray ray1 {glm::vec3(0.0f),glm::vec3{10.0f,30.0f,10.0f}}; 
+	Ray ray2 {glm::vec3(0.0f),glm::vec3{0.0f,0.0f,10.0f}}; 
+	glm::vec3 hi =ray1.BProjectOnA(ray1.m_direction,ray2.m_direction);
+	Ray holder{glm::vec3{0.0f},hi};
+	Ray ray3 = ray1.mirror(ray2);
+	std::cout<<"\n----------------PROJEFCTION DOESNT WORK WT---------mirrorRay----------------\n"<<ray1<<ray2<<holder<<ray3;
+	
+	
+	
 }
 // ----------------------------------
 // CAMERA Tests

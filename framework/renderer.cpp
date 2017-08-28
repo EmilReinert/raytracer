@@ -51,7 +51,7 @@ void Renderer::render()
 	float distance = 100000000;
 	
 	Intersection i = findIntersection(casted, distance);
-	p.color = compute_color(casted,i,3);
+	p.color = compute_color(casted,i,4);
 	write(p);
     }
   }
@@ -120,8 +120,8 @@ Color const Renderer::compute_color(Ray const& ray, Intersection const & inter, 
 		//reflection
 		if (depth>0){
 			Color reflection_clr=reflection(ray,inter,depth);
-			clr = clr+(reflection_clr*0.5);}
-		
+			clr = clr+(reflection_clr*0.5);
+		}
 		return clr;
 	}
 	
@@ -156,15 +156,26 @@ float const Renderer::normal_intensity(std::vector<std::shared_ptr<Light>> const
 Color const Renderer::reflection(Ray const & ray,Intersection const & inter, int depth){
 	Ray normalRay{inter.getPosition(),inter.getNormal()};
 	Ray toBeMirrored{inter.getPosition(),-ray.m_direction};
-	Ray mirrorRay= toBeMirrored.mirror(normalRay).newLength(1);
+	Ray  mirrorRay= toBeMirrored.mirror(normalRay);
 	float distance = 100000000;
+	//std::cout<<"\n\n--------------start--------------"<<toBeMirrored<<normalRay<<mirrorRay;
 	Intersection i = findIntersection(mirrorRay, distance);
-	//if(i.getShape()){std::cout<<i<<"\n";}
+	Color lightInter = findLightIntersection(mirrorRay,distance);
 	Color clr =compute_color(mirrorRay,i,depth-1);
 	if(i.getShape()){return clr;}
 	return Color();
 	
 
+}
+Color const Renderer::findLightIntersection(Ray const&ray, float distance)const{
+	for(std::shared_ptr<Light> lght: scene_.m_lights){ 
+		bool hit = lght->intersect(ray,distance);
+		
+		if(hit){std::cout<<hit;
+			return lght->getColor();}
+		return Color();
+	}
+	return Color();
 }
 
 

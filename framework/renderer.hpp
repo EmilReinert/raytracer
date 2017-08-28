@@ -43,8 +43,7 @@ public:
   Color const getAmbient(Color const& clr, Intersection const & inter)const;
   float const normal_intensity(std::vector<std::shared_ptr<Light>> const & lightVec,Intersection const & inter);
   Color const reflection(Ray const&ray,Intersection const & inter, int depth);
-
-
+  Color const findLightIntersection(Ray const&ray, float distance)const;
 
 private:
   unsigned width_;

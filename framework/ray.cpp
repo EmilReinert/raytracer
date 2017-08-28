@@ -69,18 +69,21 @@
 		//Hilfsgerade O+ß*n
 		//Schnittpunkt*/
 		
-		glm::vec3 m = BProjectOnA(m_direction,mirrorRay.m_direction);
-		glm::vec3 sp = m_direction-m;
-		glm::vec3 p_ = m-sp;
-		return Ray{mirrorRay.m_origin,p_};}
+		glm::vec3 mid = BProjectOnA(m_direction,mirrorRay.m_direction);
+		auto pointS = mid-m_origin;
+		auto pointP = m_direction-m_origin;
+		auto PS = pointS-pointP;
+		auto P_ = PS+pointS;
+		return Ray{m_origin,P_-m_origin};
+		}
 		
 		
 	//returns vector A with length of b projected on a 
 	glm::vec3 Ray::BProjectOnA(glm::vec3 const&b,glm::vec3 const& a)const{
 		
 		float b_length = sqrt((b.x*b.x)+(b.y*b.y)+(b.z*b.z));
-		float sklr = a.x*b.x+a.y+b.y+a.z*b.z;//a°b
-		float lng = a.x*a.x+a.y+a.y+a.z*a.z ;// |a|*|a|
+		float sklr = a.x*b.x+a.y*b.y+a.z*b.z;//a°b
+		float lng = a.x*a.x+a.y*a.y+a.z*a.z ;// |a|*|a|
 		float fktr = sklr / lng;	
 		return glm::vec3{a.x*fktr,a.y*fktr,a.z*fktr}; }
 

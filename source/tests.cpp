@@ -425,13 +425,18 @@ TEST_CASE("ray copy","[raycopy]"){
 }
 
 TEST_CASE("ray spiegel","[rayspiegel]"){
-	Ray ray1 {glm::vec3(0.0f),glm::vec3{1.0f,1.0f,-1.0f}}; 
+	Ray ray1 {glm::vec3(0.0f),glm::vec3{1.0f,1.0f,1.0f}}; 
 	Ray ray2 {glm::vec3(0.0f),glm::vec3{0.0f,0.0f,1.0f}}; 
+	glm::vec3 hi =ray1.BProjectOnA(ray2.m_direction,ray1.m_direction);
+	REQUIRE(hi.x==Approx(0.33333));
+	REQUIRE(hi.y==Approx(0.33333));
+	REQUIRE(hi.z==Approx(0.33333));
 	Ray ray3 = ray1.mirror(ray2);
-	REQUIRE(ray3.m_direction.x==Approx(-1.0f));
-	REQUIRE(ray3.m_direction.y==Approx(-1.0f));
-	REQUIRE(ray3.m_direction.z==Approx(1.0f));
-	std::cout<<"\n------------mirrorray-----------\n"<<ray3<<"\n";
+	REQUIRE(ray3.m_direction.x<0);
+	REQUIRE(ray3.m_direction.y<0);
+	REQUIRE(ray3.m_direction.z>0);
+	
+	
 }
 // ----------------------------------
 // CAMERA Tests

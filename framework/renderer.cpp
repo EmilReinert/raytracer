@@ -120,7 +120,7 @@ Color const Renderer::compute_color(Ray const& ray, Intersection const & inter, 
 		//reflection
 		if (depth>0){
 			Color reflection_clr=reflection(ray,inter,depth);
-			clr = clr+reflection_clr;}
+			clr = clr+(reflection_clr*0.5);}
 		
 		return clr;
 	}
@@ -137,7 +137,7 @@ Color const Renderer::getAmbient(Color const& clr, Intersection const&inter)cons
 	float distance =100000000.0f;
 	if(!inter.getShape()->intersect(ambient_ray,distance)){*/
 	auto col =clr;
-	return col-0.7;
+	return col-0.9;
 	}
 
 float const Renderer::normal_intensity(std::vector<std::shared_ptr<Light>> const & lightVec,  Intersection const & inter){
@@ -161,8 +161,9 @@ Color const Renderer::reflection(Ray const & ray,Intersection const & inter, int
 	Intersection i = findIntersection(mirrorRay, distance);
 	//if(i.getShape()){std::cout<<i<<"\n";}
 	Color clr =compute_color(mirrorRay,i,depth-1);
-	Color untergrenze = Color{0.01,0.01,0.01};
-	return clr*0.5;
+	if(i.getShape()){return clr;}
+	return Color();
+	
 
 }
 

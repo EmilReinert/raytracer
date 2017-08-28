@@ -41,7 +41,7 @@ public:
   std::vector<std::shared_ptr<Light>> const isLight( Intersection const& inter)const;
   Color const compute_color(Shape* const& shp, Intersection const & inter);
   Color const getAmbient(Color const& clr, Intersection const & inter)const;
-  Color const normal_intensity(std::vector<std::shared_ptr<Light>> const & lightVec,Intersection const & inter);
+  float const normal_intensity(std::vector<std::shared_ptr<Light>> const & lightVec,Intersection const & inter);
 
 
 

@@ -72,13 +72,16 @@ struct Color
   {
     return Color(r*fl,b*fl,b*fl);
   }
+   Color operator-(float fl)
+  {
+    return Color(r-fl,b-fl,b-fl);
+  }
+     Color operator+(float fl)
+  {
+    return Color(r+fl,b+fl,b+fl);
+  }
 
-	Color computeColor(float fl){
-		float f=(fl-95)*0.06;
-		std::cout<<f;
-		return Color(r+f,b+f,b+f);
-
-	}
+	
 	
 };
 

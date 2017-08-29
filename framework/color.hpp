@@ -98,7 +98,9 @@ bool operator<=(Color const& other)
     else
       return false;
   }
-
+Color const final_color(){
+	return Color{r/(r+1),g/(g+1),b/(b+1)};	
+}
 
 	
 };

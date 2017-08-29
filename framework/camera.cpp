@@ -35,16 +35,18 @@
 
 	//retuns Ray which directis do a certain Pixel starting at camera.m_position
 	Ray Camera::castRay(int x, int y, int resolution_x, int resolution_y )const{
-		/*float x = pix.x/resolution_x;
-		float y = pix.y/resolution_y;
-		float z = -(0.5/tan(m_fov/2*M_PI/360));
-		glm::vec3 ray_direction{x,y,z};
-		return Ray(m_position,ray_direction);
+		float dis_film = (0.5 / tan(m_fov/2));
 
-		float distance = 1000;
-		glm::vec3 direction = glm::vec3{pix.x/2,pix.y,-distance};
-		return Ray{glm::vec3{0.0f},direction};*/
-		
+ 		 float xx = float(x) * 1.0 / float(resolution_x) - 0.5;
+  		float yy = float(y) * 1.0 / float(resolution_y) - 0.5;
+  		float zz = -1.0 * dis_film;
+
+ 		 glm::vec3 direction{xx,yy,zz}; 
+  		
+  
+		Ray ray = Ray{m_position, direction}.newLength(1);
+		return ray;
+		/*
 		float zz = -120;
 		float xx,yy;
 		if(x>=(resolution_x/2)){
@@ -58,7 +60,7 @@
 			yy = -1*((resolution_y/2)-y);//std::cout<<"-"<<resolution_y<<"-"<<y<<"-"<<yy<<"-";
 }
 		glm::vec3 ray_direction{xx,yy,zz};
-		return Ray{m_position,ray_direction};
+		return Ray{m_position,ray_direction};*/
 
 
 	}

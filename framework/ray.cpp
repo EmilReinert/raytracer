@@ -101,6 +101,14 @@
 
 	Color const Ray::raytrace(){return Color{0.0,1.0,1.0};}
 
+	Ray const Ray::reflectionRay(Ray const& mirror){
+		glm::vec3 I = m_direction;
+		glm::vec3 N = mirror.m_direction;
+		float fktr = 2*((N.x*I.x)+(N.y*I.y)+(N.z*I.z));
+		glm::vec3 NN{fktr*N.x,fktr*N.y,fktr*N.z};
+		return Ray{m_origin,I-NN};
+	}	
+	
 	Ray const Ray::refractionRay(Ray const& mirror){
 		int eta = 1;
 		glm::vec3 direction =glm::vec3(0.0f);

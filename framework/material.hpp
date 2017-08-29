@@ -13,7 +13,9 @@ struct Material
         m_ka{Color{0.0f,0.0f,0.0f}},
         m_kd{Color{0.0f,0.0f,0.0f}},
         m_ks{Color{0.0f,0.0f,0.0f}},
-        m_m{0.0f}
+        m_m{0.0f},
+	m_opacity{0.0f},
+	m_brechungsindex{0.0f}
     {};
 
     //Custom Constructor
@@ -22,7 +24,18 @@ struct Material
         m_ka{ka},
         m_kd{kd},
         m_ks{ks},
-        m_m{m}
+        m_m{m},
+	m_opacity{0.0f},
+	m_brechungsindex{0.0f}
+        {};
+	  Material(std::string name, Color ka, Color kd, Color ks, float m, float opacity,float brechungsindex) :
+        m_name{name},
+        m_ka{ka},
+        m_kd{kd},
+        m_ks{ks},
+        m_m{m},
+	m_opacity{opacity},
+	m_brechungsindex{brechungsindex}
         {};
 
     //Member Varibles:
@@ -31,6 +44,8 @@ struct Material
     Color m_kd;         //diffuse Reflexion
     Color m_ks;         //spiegelnde Reflexion
     float m_m;          //Exponent für spiegelnde Reflexion
+    float m_opacity;    //refraction intensity
+    float m_brechungsindex;
 
     // << Output Operator
     friend std::ostream& operator<<(std::ostream& os, Material const& material)

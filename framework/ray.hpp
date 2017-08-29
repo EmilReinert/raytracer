@@ -62,6 +62,8 @@ public:
 
 	Color const raytrace();
 	
+	Ray const reflectionRay(Ray const& mirror);
+	
 	Ray const refractionRay(Ray const& mirror);
 };
 

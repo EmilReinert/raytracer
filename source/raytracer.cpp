@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 	//scene.m_shapes.push_back(std::make_shared<Sphere>(sphere3));
 	
 	Sphere sphere4{"sphere4", Material{"blau",Color{0.5,0.5,0.5},Color{1.0f,1.0f,1.0f},
-		Color{1.0f,1.0f,1.0f},1.0f,100.0f,12312313.0f},glm::vec3{-50.0f,0.0f,-200.0f},50.0f};
+		Color{1.0f,1.0f,1.0f},1.0f,100.0f,12312313.0f},glm::vec3{20.0f,100.0f,-400.0f},50.0f};
 	scene.m_shapes.push_back(std::make_shared<Sphere>(sphere4));
 	
 
@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
 		Color{1.0f,1.0f,1.0f}, Color{1.0f,1.0f,1.0f},1.0f},
 		//min
 		glm::vec3{1000.0f,-3000.0f,-1500.0f},
-glm::vec3{100.0f,3000.0f,-500.0f}	//max
+glm::vec3{100.0f,3000.0f,0.0f}	//max
 	};
 	scene.m_shapes.push_back(std::make_shared<Box>(box));
 	

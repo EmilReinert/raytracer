@@ -51,7 +51,7 @@ void Renderer::render()
 	float distance = 100000000;
 	
 	Intersection i = findIntersection(casted, distance);
-	p.color = compute_color(casted,i,4);
+	p.color = compute_color(casted,i,3);
 	write(p);
     }
   }
@@ -85,21 +85,21 @@ Color const Renderer::compute_color(Ray const& ray, Intersection const & inter, 
 			clr = clr+intensity_normal;
 			//std::cout<<"-"<<intensity_normal;
 		}
+		//reflection
+		if (depth>0){
+			Color reflection_clr=reflection(ray,inter,depth);
+			clr = clr+(reflection_clr*0.5);
+		}
 		//refraction
 		if (inter.getShape()->get_material().m_opacity>0.0f){
 			Color refraction_clr= refraction(ray,inter,depth);//std::cout<<refraction_clr;
 			clr =clr*(1-inter.getShape()->get_material().m_opacity*0.01)
 				- refraction_clr*inter.getShape()->get_material().m_opacity*0.01;
 		}
-		//reflection
-		if (depth>0){
-			Color reflection_clr=reflection(ray,inter,depth);
-			clr = clr+(reflection_clr*0.5);
-		}
 		return clr;
 	}
 	
-	return Color();//backgroundcolor;
+	return Color(0.5,0.5,0.5);//backgroundcolor;
 	
 
 
@@ -203,11 +203,11 @@ Color const Renderer::refraction(Ray const & ray,Intersection const & inter, int
 	float distance = 100000000;
 	//std::cout<<refractionRay;
 	Intersection i = findIntersection(refractionRay, distance);
-	Color clr =compute_color(refractionRay,i,depth-1);
+	Color clr =compute_color(refractionRay,i,depth);
 	if(i.getShape()&&i.getShape()!=inter.getShape()){
-		//std::cout<<clr;
+		//std::cout<<clr<<i;
 		return clr;}
-	return Color();
+	return Color(0.5,0.5,0.5);
 }
 
 

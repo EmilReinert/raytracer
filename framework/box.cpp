@@ -161,9 +161,31 @@ Intersection Box::realintersect(Ray const& ray, float& distance){
        
 	//on the search for the given plane - normal vector for mirrorVec
 	glm::vec3 n{0.0f};
-	if(iii.m_position.x==Approx(m_max.x)||iii.m_position.x==Approx(m_min.x)){n=glm::vec3{1.0f,0.0f,0.0f};}
-	if(iii.m_position.y==Approx(m_max.y)||iii.m_position.x==Approx(m_min.x)){n=glm::vec3{0.0f,1.0f,0.0f};}
-	if(iii.m_position.z==Approx(m_max.z)||iii.m_position.x==Approx(m_min.x)){n=glm::vec3{0.0f,0.0f,1.0f};}
+	if((iii.m_position.x) == Approx(m_min.x))
+        {
+           n = glm::vec3{-1.0f, 0.0f, 0.0f};
+        }
+        else if((iii.m_position.x) == Approx(m_max.x))
+        {
+            n = glm::vec3{1.0f, 0.0f, 0.0f};
+        }
+        else if((iii.m_position.y) == Approx(m_min.y))
+        {
+            n = glm::vec3{0.0f, -1.0f, 0.0f};
+        }
+        else if((iii.m_position.y) == Approx(m_max.y))
+        {
+            n = glm::vec3{0.0f, 1.0f, 0.0f};
+        }
+        else if((iii.m_position.z) == Approx(m_min.z))
+        {
+            n = glm::vec3{0.0f, 0.0f, -1.0f};
+        }
+        else if((iii.m_position.z) == Approx(m_max.z))
+        {
+            n = glm::vec3{0.0f, 0.0f, 1.0f};
+        }
+
 	iii.m_normal = n;
 	}
 	/*

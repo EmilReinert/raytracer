@@ -414,8 +414,8 @@ TEST_CASE("ray copy","[raycopy]"){
 	Ray ray2(ray1);
 	REQUIRE(ray1.m_direction==ray2.m_direction);
 	ray1.setDirection(ray2.m_direction);
-	Ray newray3 = ray1.newLength(8);
-	REQUIRE(newray3.getLength()==Approx(8.0f));
+	Ray newray3 = ray1.newLength(1);
+	REQUIRE(newray3.getLength()==Approx(1.0f));
 	//winkel
 	Ray ray3 {glm::vec3{0.0f},glm::vec3{0.0f,0.0f,-1.0f}}; 
 	Ray ray4 {glm::vec3{0.0f},glm::vec3{1.0f,0.0f,0.0f}};
@@ -447,7 +447,13 @@ TEST_CASE("ray spiegecl","[rayspiegecl]"){
 	Ray holder{glm::vec3{0.0f},hi};
 	Ray ray3 = ray1.mirror(ray2);
 	std::cout<<"\n----------------PROJEFCTION DOESNT WORK WT---------mirrorRay----------------\n"<<ray1<<ray2<<holder<<ray3;
+}	
 	
+TEST_CASE("ray refraction","[rayfraction]"){
+	Ray ray1 {glm::vec3(0.0f),glm::vec3{10.0f,30.0f,10.0f}}; 
+	Ray ray2 {glm::vec3(0.0f),glm::vec3{0.0f,0.0f,10.0f}}; 
+	Ray ray3 = ray1.refractionRay(ray2);
+	std::cout<<"\n----------------REFRACTION----------------\n"<<ray1<<ray2<<ray3;
 	
 	
 }

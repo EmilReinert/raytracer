@@ -90,7 +90,7 @@ Intersection Sphere::realintersect(Ray const& ray, float& distance){
 	float dis =c_length-e_length;
 	inter.m_distance = dis;
 	inter.m_hit = true;
-	inter.m_shape = this;
+	inter.m_shape = std::make_shared<Sphere>(*this);
 	inter.m_position= ray.m_origin+glm::vec3{dis*a.x,dis*a.y,dis*a.z};
 	
 	inter.m_normal = inter.m_position-m_center;

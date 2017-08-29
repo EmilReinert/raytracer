@@ -154,7 +154,7 @@ Intersection Box::realintersect(Ray const& ray, float& distance){
                 (nray.m_direction.x * nray.m_direction.x + 
                 nray.m_direction.y * nray.m_direction.y + 
                 nray.m_direction.z * nray.m_direction.z));
-	iii.m_shape = this;
+	iii.m_shape = std::make_shared<Box>(*this);
        iii.m_position = glm::vec3{ray.m_origin.x + iii.m_distance * nray.m_direction.x,
             ray.m_origin.y + iii.m_distance * nray.m_direction.y,
             ray.m_origin.z + iii.m_distance * nray.m_direction.z};

@@ -179,28 +179,7 @@ TEST_CASE("intersectRaySphere", "[intersect]")
 // AUFGABE 5.8 TEST
 // ----------------------------------
 
-TEST_CASE("virtual", "[Destructors]")
-{
 
-	Color c_red {255.0f, 0.0f, 0.0f};
-	Material red {"", c_red, c_red, c_red, 0.0f};
-
-	glm::vec3 position {0.0f,0.0f,0.0f};
-
-	std::cout << "Create s1\n";
-	Sphere* s1 = new Sphere("sphere0",red,position,1.2f);
-	std::cout << "Create s2\n";
-	Shape* s2 = new Sphere("sphere1",red,position,1.2f);
-
-	std::cout << "Printing objects: \n";
-	std::cout << *s1;
-	std::cout << *s2 << "\n";
-
-	std::cout << "Delete s1\n";
-	delete s1;
-	std::cout << "Delete s2\n";
-	delete s2;
-}
 
 
 // ----------------------------------
@@ -379,13 +358,12 @@ TEST_CASE("light construction", "[lightconstruction]"){
 TEST_CASE("intersection constructor","[intersectionconstructor]"){ 
 	Intersection inter1 = Intersection();
 	Sphere s {"SHAPEE NUMERO UNO", Material{"",Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},0.0f},glm::vec3{0.0f},1.0f};
-	Shape *	f = &s;
+	std::shared_ptr<Shape>	f = std::make_shared<Sphere>(s);
 	Intersection inter2 = Intersection{glm::vec3{1.0f},glm::vec3{1.0f},1.0f,true,f};//important!
 	//REQUIRE(glm::vec3{1.0f}==glm::vec3(1.0f,1.0f,1.0f));
 	REQUIRE(inter1.getNormal()==glm::vec3{0.0f});
 	REQUIRE(inter2.getNormal()==glm::vec3(1.0f,1.0f,1.0f));
 	REQUIRE(inter2.isHit());
-	REQUIRE(inter2.getShape()==&s);
 	//INTERSECTION print
 	std::cout<<"\n--------------------Intersection print---------------------\n"<<inter2;
 	

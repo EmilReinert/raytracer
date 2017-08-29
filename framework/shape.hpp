@@ -66,7 +66,7 @@ struct Intersection{
 	glm::vec3 m_normal;
 	double m_distance;
 	bool m_hit;
-	Shape* m_shape=nullptr;
+	std::shared_ptr<Shape> m_shape=nullptr;
 	
 
 
@@ -78,7 +78,7 @@ public:
 		m_hit{false},
 		m_shape{nullptr}{}
 
-	Intersection(glm::vec3 const&position, glm::vec3 const&normal, double const& distance, bool const & hit, Shape* const shape):
+	Intersection(glm::vec3 const&position, glm::vec3 const&normal, double const& distance, bool const & hit, std::shared_ptr<Shape> const shape):
 		m_position{position},
 		m_normal{normal},
 		m_distance{distance},
@@ -89,7 +89,7 @@ public:
 	glm::vec3 const getNormal()const{ return this->m_normal;}
 	double const getDistance()const{return this-> m_distance;}
 	bool const isHit()const{return this->m_hit;}
-	Shape* getShape()const{return this->m_shape;}
+	std::shared_ptr<Shape> getShape()const{return this->m_shape;}
 
 	//override INTERSECTION print
 	std::ostream& print (std::ostream& os) const{

@@ -75,39 +75,6 @@ void Renderer::write(Pixel const& p)
 }
 
 
-Intersection const Renderer::findIntersection(Ray const&ray, float distance){
-	float distance_to_object= 100000000000000000;
-	Shape* shape_ptr;
-	Intersection i;
-	for(std::shared_ptr<Shape> shp: scene_.m_shapes){ 
-		Intersection inter = shp->realintersect(ray,distance);
-		if(inter.isHit()&&inter.getDistance()< distance_to_object){
-			shape_ptr = inter.getShape();
-			distance_to_object = inter.getDistance();
-			i = inter;
-			
-		}
-	}
-	return i;
-}
-
-std::vector<std::shared_ptr<Light>> const Renderer::isLight(Intersection const&inter)const{
-	std::vector<std::shared_ptr<Light>> lightVec;
-	for(std::shared_ptr<Light> lght: scene_.m_lights){
-		bool hit=false;
-		auto point = inter.getPosition();
-		Ray light_ray{point,lght->getSource()-point};
-		float distance =10000000.0f;
-		for(std::shared_ptr<Shape> shp: scene_.m_shapes){ 
-			if(shp->intersect(light_ray,distance)){
-				return std::vector<std::shared_ptr<Light>>();
-			}
-		}
-		lightVec.push_back(lght);
-	}
- 	return lightVec;
-}
-
 Color const Renderer::compute_color(Ray const& ray, Intersection const & inter, int depth){
 	if(inter.getShape()){
 		Color clr =  getAmbient(inter.getShape()->get_material().m_ka,inter);//ambient
@@ -118,24 +85,65 @@ Color const Renderer::compute_color(Ray const& ray, Intersection const & inter, 
 			clr = clr+intensity_normal;
 			//std::cout<<"-"<<intensity_normal;
 		}
+		//refraction
+		if (inter.getShape()->get_material().m_opacity>0.0f){
+			Color refraction_clr= refraction(ray,inter,depth);//std::cout<<refraction_clr;
+			clr =clr*(1-inter.getShape()->get_material().m_opacity*0.01)
+				- refraction_clr*inter.getShape()->get_material().m_opacity*0.01;
+		}
 		//reflection
 		if (depth>0){
 			Color reflection_clr=reflection(ray,inter,depth);
 			clr = clr+(reflection_clr*0.5);
 		}
-		//refraction
-		if (inter.getShape()->get_material().m_opacity>0.0f){
-			Color refraction_clr= refraction(ray,inter,depth);//std::cout<<refraction_clr;
-			clr += refraction_clr;//*inter.getShape()->get_material().m_opacity);
-		}
 		return clr;
 	}
 	
-	return Color(0.5,0.5,0.5);//backgroundcolor;
+	return Color();//backgroundcolor;
 	
 
 
 }
+
+
+Intersection const Renderer::findIntersection(Ray const&ray, float distance){
+	float distance_to_object= 100000000000000000;
+	std::shared_ptr<Shape> shape_ptr;
+	Intersection i;
+	for(std::shared_ptr<Shape> shp: scene_.m_shapes){ 
+		Intersection inter = shp->realintersect(ray,distance);
+		if(inter.isHit()&&inter.getDistance()< distance_to_object){//&&inter.getShape()!=shp){
+			shape_ptr = inter.getShape();
+			distance_to_object = inter.getDistance();
+			i = inter;
+			
+		}
+	}
+	return i;
+}
+
+
+std::map<std::shared_ptr<Light>,float > const Renderer::isLight(Intersection const&inter){
+	std::map<std::shared_ptr<Light>,float> lightMap;
+	for(std::shared_ptr<Light> lght: scene_.m_lights){
+		bool hit=false;
+		auto point = inter.getPosition();
+		Ray light_ray{point,lght->getSource()-point};
+		float distance =10000000.0f;
+		for(std::shared_ptr<Shape> shp: scene_.m_shapes){ 
+			Intersection holderintersection = shp->realintersect(light_ray,distance);
+			if(holderintersection.isHit()){
+				if(holderintersection.getShape()->get_material().m_opacity>0){
+				lightMap[lght]=holderintersection.getShape()->get_material().m_opacity*0.01;}
+				else{lightMap[lght]=0.0f;}
+			}
+			
+		}
+		lightMap[lght]=1.0f;
+	}
+ 	return lightMap;
+}
+
 
 Color const Renderer::getAmbient(Color const& clr, Intersection const&inter)const{
 	/*auto point = inter.getPosition();
@@ -146,15 +154,15 @@ Color const Renderer::getAmbient(Color const& clr, Intersection const&inter)cons
 	return col-0.9;
 	}
 
-float const Renderer::normal_intensity(std::vector<std::shared_ptr<Light>> const & lightVec,  Intersection const & inter){
+float const Renderer::normal_intensity(std::map<std::shared_ptr<Light>,float > & lightMap,  Intersection const & inter){
 	
-	for (std::shared_ptr<Light> lght: lightVec){
+	for (std::map<std::shared_ptr<Light>,float >::iterator it = lightMap.begin();it!=lightMap.end();it++){
 		auto point = inter.getPosition();
-		Ray light_ray{point,lght->getSource()-point};
+		Ray light_ray{point,it->first->getSource()-point};
 		auto a = glm::normalize(light_ray.m_direction);
 		auto b = glm::normalize(inter.getNormal());
 		//std::cout<<Ray{glm::vec3{0.0},inter.getNormal()};
-		return a.x*b.x+a.y*b.y+a.z*b.z; 
+		return (a.x*b.x+a.y*b.y+a.z*b.z)*(it->second); 
 		
 	}
 	return 0;
@@ -197,7 +205,7 @@ Color const Renderer::refraction(Ray const & ray,Intersection const & inter, int
 	Intersection i = findIntersection(refractionRay, distance);
 	Color clr =compute_color(refractionRay,i,depth-1);
 	if(i.getShape()&&i.getShape()!=inter.getShape()){
-		std::cout<<clr;
+		//std::cout<<clr;
 		return clr;}
 	return Color();
 }

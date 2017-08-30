@@ -9,6 +9,13 @@
 
 #include "scene.hpp"
 #include "material.hpp"
+#include "shape.hpp"
+#include "sphere.hpp"
+#include "box.hpp"
+#include "color.hpp"
+#include "ray.hpp"
+#include "light.hpp"
+#include "camera.hpp"
 
 struct SDFloader
 {

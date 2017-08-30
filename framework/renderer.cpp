@@ -30,7 +30,7 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file, Scene const&
 void Renderer::render()
 {
   const std::size_t checkersize = 20;
-	Camera cam{"camera1",20};
+	Camera cam{"camera1",20};cam.m_position = glm::vec3{0.0,0.0,500};
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
       Pixel p(x,y);
@@ -51,7 +51,7 @@ void Renderer::render()
 	float distance = 100000000;
 	
 	Intersection i = findIntersection(casted, distance);
-	p.color = compute_color(casted,i,3);
+	p.color = compute_color(casted,i,5);
 	write(p);
     }
   }
@@ -87,13 +87,13 @@ Color const Renderer::compute_color(Ray const& ray, Intersection const & inter, 
 		}
 		//reflection
 		if (depth>0){
-			Color reflection_clr=reflection(ray,inter,depth);
+			Color reflection_clr=reflection(ray,inter,depth-1);
 			clr = clr+(reflection_clr*inter.getShape()->get_material().m_m);
-		}
+		
 		//refraction
 		if (inter.getShape()->get_material().m_opacity>0.0f){
-			Color refraction_clr= refraction(ray,inter,depth);//std::cout<<refraction_clr;
-			clr =clr+(1-inter.getShape()->get_material().m_opacity*0.01)- refraction_clr*inter.getShape()->get_material().m_opacity*0.01;
+			Color refraction_clr= refraction(ray,inter,depth-1);//std::cout<<refraction_clr;
+			clr =clr+(1-inter.getShape()->get_material().m_opacity*0.01)- refraction_clr*inter.getShape()->get_material().m_opacity*0.01;}
 		}
 		//std::cout<<clr;
 		return clr.final_color();
@@ -207,7 +207,7 @@ Color const Renderer::refraction(Ray const & ray,Intersection const & inter, int
 	float distance = 100000000;
 	//std::cout<<refractionRay;
 	Intersection i = findIntersection(refractionRay, distance);
-	Color clr =compute_color(refractionRay,i,depth);
+	Color clr =compute_color(refractionRay,i,depth-1);
 	if(i.getShape()&&i.getShape()!=inter.getShape()){
 		//std::cout<<clr<<i;
 		return clr;}

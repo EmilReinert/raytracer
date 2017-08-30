@@ -45,10 +45,33 @@
 						stream >> in_material.m_ks.r;
 						stream >> in_material.m_ks.g;
 						stream >> in_material.m_ks.b;
+						stream >> in_material.m_opacity;
 
 						//addToMaterial(material);
-						scene.m_materials.push_back(in_material);
+						scene.m_materials[in_material.m_name]=in_material;	
+						std::cout<<"\nMaterial Added: "<< in_material.m_name;
 
+					}
+					if(word == "shape"){
+					
+						stream>>word;
+						if(word=="sphere"){
+							std::string name;
+							stream>>name;				
+								
+							glm::vec3 ctr;
+							stream>>ctr.x;
+							stream>>ctr.y;
+							stream>>ctr.y;
+							float r;
+							stream>>r;
+							std::string material;
+							stream>>material;
+							Material mat = scene.m_materials[material];
+							Sphere sp{name,mat,ctr,r};
+							scene.m_shapes.push_back(std::make_shared<Sphere>(sp));
+							std::cout<<"\nSphere Added: "<< name;
+						}
 					}
 				}
 			}

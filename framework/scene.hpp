@@ -9,6 +9,7 @@
 #include "material.hpp"
 #include "shape.hpp"
 #include "light.hpp"
+#include <map>
 
 struct Scene
 {
@@ -22,7 +23,7 @@ struct Scene
     std::vector<std::shared_ptr<Light>> m_lights;
 
     //Materials
-    std::vector<Material> m_materials;
+    std::map<std::string,Material> m_materials;
 
     //Shapes
     std::vector<std::shared_ptr<Shape>> m_shapes;
@@ -30,8 +31,13 @@ struct Scene
     //Composites
     //std::vector<Composite> m_composites; 
 
-	std::ostream& print(std::ostream & os)const{
+	std::ostream& print(std::ostream & os){
 		//if (m_ambient_light == nullptr){os<<"\n----no shapes added yet----\n";} else{os<<"\nAmbient Light: "<<m_ambient-light;}
+		std::cout<<"\nScene: \n";
+		if(m_lights.empty()){os<<"\n----no materials added yet----\n";}
+		else{int i = 1;
+		for(std::map<std::string,Material>::iterator mat = m_materials.begin();mat!=m_materials.end();mat++)
+			{os<<"\nMaterial "<<i<<": "<< mat->first;i++;}}
 		if(m_lights.empty()){os<<"\n----no lights added yet----\n";}
 		else{int i = 1;
 		for(std::shared_ptr<Light> lght: m_lights)
@@ -42,7 +48,7 @@ struct Scene
 		return os;
 	}
 
-	friend std::ostream& operator<<(std::ostream& os, Scene const& sc)
+	friend std::ostream& operator<<(std::ostream& os, Scene & sc)
 		{return sc.print(os);}
 };
 

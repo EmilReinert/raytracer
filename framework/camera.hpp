@@ -10,14 +10,14 @@
 #include "pixel.hpp"
 
 class Camera{
-
+public:
 std::string m_name;
 unsigned m_fov;
 glm::vec3 m_position;
 glm::vec3 m_direction;
 glm::vec3 m_up;
 
-public:
+
 	
 	Camera();
 	Camera(std::string const& name, unsigned const&fov);

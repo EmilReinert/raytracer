@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
 	scene.m_shapes.push_back(std::make_shared<Sphere>(sphere2));
 	
 	Sphere sphere3{"glasssphere3", Material{"",Color{0.0f,0.0f,0.0f},Color{1.0f,1.0f,1.0f},
-		Color{1.0f,1.0f,1.0f},0.9f,100.0f,12312313.0f},glm::vec3{0.0f,30.0f,-200.0f},50.0f};
+		Color{1.0f,1.0f,1.0f},1.0f,100.0f,12312313.0f},glm::vec3{0.0f,30.0f,-200.0f},50.0f};
 	scene.m_shapes.push_back(std::make_shared<Sphere>(sphere3));
 	
 	Sphere sphere4{"sphere4", Material{"blau",Color{0.0,0.0,1.0},Color{1.0f,1.0f,1.0f},
@@ -48,14 +48,25 @@ int main(int argc, char* argv[])
 	scene.m_shapes.push_back(std::make_shared<Sphere>(sphere4));
 	
 	
-	Box box {"test_box",
+	Box box1 {"box1",
+		Material{"",Color{0.0f,1.0f,1.0f},Color{1.0f,1.0f,1.0f},
+		Color{1.0f,1.0f,1.0f},0.0f},
+		//min
+		glm::vec3{-5000.0f,-3000.0f,-150.0f},
+glm::vec3{100.0f,-200.0f,-25000.0f}	//max
+	};
+	scene.m_shapes.push_back(std::make_shared<Box>(box1));
+	
+	
+	
+	Box box2 {"mirrorwall",
 		Material{"",Color{0.0f,0.0f,0.0f},
 		Color{1.0f,1.0f,1.0f}, Color{1.0f,1.0f,1.0f},0.7f},
 		//min
 		glm::vec3{1000.0f,-3000.0f,-1500.0f},
 glm::vec3{100.0f,3000.0f,0.0f}	//max
 	};
-	scene.m_shapes.push_back(std::make_shared<Box>(box));
+	scene.m_shapes.push_back(std::make_shared<Box>(box2));
 	
 	//composites(?)
 	

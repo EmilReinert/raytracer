@@ -96,7 +96,7 @@ Color const Renderer::compute_color(Ray const& ray, Intersection const & inter, 
 			clr =clr+(1-inter.getShape()->get_material().m_opacity*0.01)- refraction_clr*inter.getShape()->get_material().m_opacity*0.01;
 		}
 		//std::cout<<clr;
-		return clr;//.final_color();
+		return clr.final_color();
 	}
 	
 	return Color();//backgroundcolor;

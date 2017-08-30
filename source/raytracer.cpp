@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
 	Light light2{"light2",glm::vec3{-80.0,100.0,0.0},50.0f,Color{1.0f,1.0f,1.0f},0.5f};
 	scene.m_lights.push_back(std::make_shared<Light>(light2));
 	//ambient
-	Light ambient{"ambientlight",glm::vec3{0.0,0.0,0.0},1.0f,Color{1.0f,1.0f,1.0f}};
+	Color ambient{1.0f,1.0f,1.0f};
 	scene.m_ambient_light=ambient;
 	//shapes
 	

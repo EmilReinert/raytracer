@@ -17,7 +17,7 @@ struct Scene
     //Camera m_camera;
 
     //Ambient Light
-    Light m_ambient_light;
+    Color m_ambient_light;
 
     //Lights
     std::vector<std::shared_ptr<Light>> m_lights;
@@ -36,8 +36,10 @@ struct Scene
 		std::cout<<"\nScene: \n";
 		if(m_lights.empty()){os<<"\n----no materials added yet----\n";}
 		else{int i = 1;
-		for(std::map<std::string,Material>::iterator mat = m_materials.begin();mat!=m_materials.end();mat++)
-			{os<<"\nMaterial "<<i<<": "<< mat->first;i++;}}
+	/*	for(std::map<std::string,Material>::iterator mat = m_materials.begin();mat!=m_materials.end();mat++)
+			{os<<"\nMaterial "<<i<<": "<< mat->first;i++;}}*/
+		if(m_ambient_light==Color(0.0,0.0,0.0)){os<<"\n----no ambient light added yet----\n";}
+		else{os<<"\nAmbient light: "<<m_ambient_light;}
 		if(m_lights.empty()){os<<"\n----no lights added yet----\n";}
 		else{int i = 1;
 		for(std::shared_ptr<Light> lght: m_lights)

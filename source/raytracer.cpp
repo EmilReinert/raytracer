@@ -21,10 +21,10 @@ int main(int argc, char* argv[])
 	std::string bla = "/home/emil/Documents/RAYTRACER/final_program/raytracer/source/material_input.txt";
 	scene = loader.load(bla);
 	//light
-	Light light1{"light1",glm::vec3{0.0,100.0,0.0},10.0f,Color{1.0f,1.0f,1.0f}};
+	Light light1{"light1",glm::vec3{0.0,500.0,0.0},10.0f,Color{1.0f,1.0f,1.0f},0.5f};
 	scene.m_lights.push_back(std::make_shared<Light>(light1));
-	Light light2{"light2",glm::vec3{1000.0,1000.0,0.0},1.0f,Color{1.0f,1.0f,1.0f}};
-	//scene.m_lights.push_back(std::make_shared<Light>(light2));
+	Light light2{"light2",glm::vec3{-80.0,500.0,0.0},50.0f,Color{1.0f,1.0f,1.0f},0.5f};
+	scene.m_lights.push_back(std::make_shared<Light>(light2));
 	//ambient
 	Light ambient{"ambientlight",glm::vec3{0.0,0.0,0.0},1.0f,Color{1.0f,1.0f,1.0f}};
 	scene.m_ambient_light=ambient;
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 	//scene.m_shapes.push_back(std::make_shared<Sphere>(sphere3));
 	
 	Sphere sphere4{"sphere4", Material{"blau",Color{0.5,0.5,0.5},Color{1.0f,1.0f,1.0f},
-		Color{1.0f,1.0f,1.0f},1.0f,100.0f,12312313.0f},glm::vec3{20.0f,100.0f,-400.0f},50.0f};
+		Color{1.0f,1.0f,1.0f},1.0f,100.0f,12312313.0f},glm::vec3{20.0f,200.0f,-400.0f},50.0f};
 	scene.m_shapes.push_back(std::make_shared<Sphere>(sphere4));
 	
 

@@ -79,24 +79,24 @@ Color const Renderer::compute_color(Ray const& ray, Intersection const & inter, 
 	if(inter.getShape()){
 		Color clr =  getAmbient(inter.getShape()->get_material().m_ka,inter);//ambient
 		auto light_map = whatLight(inter);
-		if(!light_map.empty()){
+		if(isLight(inter)){
 			//actual in light
 			float intensity_normal = normal_intensity(light_map,inter);
-			clr = clr+intensity_normal;
+			//clr = clr+(intensity_normal*0.5);
 			//std::cout<<"-"<<intensity_normal;
+		}
+		//reflection
+		if (depth>0){
+			Color reflection_clr=reflection(ray,inter,depth);
+			clr = clr+(reflection_clr*0.5);
 		}
 		//refraction
 		if (inter.getShape()->get_material().m_opacity>0.0f){
 			Color refraction_clr= refraction(ray,inter,depth);//std::cout<<refraction_clr;
 			clr =clr*(1-inter.getShape()->get_material().m_opacity*0.01)- refraction_clr*inter.getShape()->get_material().m_opacity*0.01;
 		}
-		//reflection
-		if (depth>0){
-			Color reflection_clr=reflection(ray,inter,depth);
-			clr = clr+(reflection_clr*0.2);
-		}
 		//std::cout<<clr;
-		return clr;
+		return clr;//.final_color();
 	}
 	
 	return Color(0.5,0.5,0.5);//backgroundcolor;

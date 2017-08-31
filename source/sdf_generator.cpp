@@ -23,7 +23,7 @@
 int main(){
 
 	SDFloader loader{};
-	Scene s1 = loader.load("/home/emil/Documents/RAYTRACER/final_program/raytracer/source/material_input.txt");
+	Scene s1 = loader.load("/home/emil/Documents/RAYTRACER/final_program/raytracer/source/sdf_scene.txt");
 	std::cout<<s1;
 	return 0;
 };

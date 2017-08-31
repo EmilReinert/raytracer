@@ -23,8 +23,28 @@
 int main(){
 
 	SDFloader loader{};
-	Scene s1 = loader.load("/home/emil/Documents/RAYTRACER/final_program/raytracer/source/sdf_scene.txt");
-	std::cout<<s1;
+	Scene scene = loader.load("/home/emil/Documents/RAYTRACER/final_program/raytracer/source/sdf_scene.txt");
+	std::cout<<scene;
+	
+	unsigned const width = 1000;
+  unsigned const height =1000;
+  std::string const filename = "./sdf_scene.ppm";
+
+  Renderer app{width, height, filename, scene};
+
+  std::thread thr([&app]() { app.render(); });
+
+  Window win{glm::ivec2{width,height}};
+
+  while (!win.should_close()) {
+    if (win.get_key(GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+      win.close();
+    }
+    win.show(app.colorbuffer());
+  }
+
+  thr.join();	
+	
 	return 0;
 };
 

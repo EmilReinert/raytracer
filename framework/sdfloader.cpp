@@ -45,8 +45,9 @@
 						stream >> in_material.m_ks.r;
 						stream >> in_material.m_ks.g;
 						stream >> in_material.m_ks.b;
+						stream >> in_material.m_m;
 						stream >> in_material.m_opacity;
-
+						stream >> in_material.m_brechungsindex;
 						//addToMaterial(material);
 						scene.m_materials[in_material.m_name]=in_material;	
 						std::cout<<"\nMaterial Added: "<< in_material.m_name;
@@ -57,12 +58,11 @@
 						stream>>word;
 						if(word=="sphere"){
 							std::string name;
-							stream>>name;				
-								
+							stream>>name;
 							glm::vec3 ctr;
 							stream>>ctr.x;
 							stream>>ctr.y;
-							stream>>ctr.y;
+							stream>>ctr.z;
 							float r;
 							stream>>r;
 							std::string material;
@@ -72,10 +72,9 @@
 							scene.m_shapes.push_back(std::make_shared<Sphere>(sp));
 							std::cout<<"\nSphere Added: "<< name;
 						}
-					if(word == "box"){
+						if(word == "box"){
 							std::string name;
-							stream>>name;				
-							
+							stream>>name;
 							glm::vec3 min;
 							glm::vec3 max;
 							stream>>min.x;
@@ -90,7 +89,7 @@
 							Box box{name,mat,min,max};
 							scene.m_shapes.push_back(std::make_shared<Box>(box));
 							std::cout<<"\nBox Added: "<< name;
-						}
+							}
 					}
 					if(word=="ambient"){
 						Color clr;

@@ -72,6 +72,50 @@
 							scene.m_shapes.push_back(std::make_shared<Sphere>(sp));
 							std::cout<<"\nSphere Added: "<< name;
 						}
+					if(word == "box"){
+							std::string name;
+							stream>>name;				
+							
+							glm::vec3 min;
+							glm::vec3 max;
+							stream>>min.x;
+							stream>>min.y;
+							stream>>min.z;
+							stream>>max.x;
+							stream>>max.y;
+							stream>>max.z;
+							std::string material;
+							stream>>material;
+							Material mat = scene.m_materials[material];
+							Box box{name,mat,min,max};
+							scene.m_shapes.push_back(std::make_shared<Box>(box));
+							std::cout<<"\nBox Added: "<< name;
+						}
+					}
+					if(word=="ambient"){
+						Color clr;
+						stream>>clr.r;
+						stream>>clr.g;
+						stream>>clr.b;
+						scene.m_ambient_light = clr;
+					}
+					if(word=="light"){
+						std::string name;
+						stream>>name;
+						glm::vec3 position;
+						stream>>position.x;
+						stream>>position.y;
+						stream>>position.z;		
+						float radius;
+						stream>> radius;
+						Color clr;
+						stream>>clr.r;
+						stream>>clr.g;
+						stream>>clr.b;
+						float intensity;
+						stream>>intensity;
+						Light lght{name,position,radius,clr,intensity};
+						scene.m_lights.push_back(std::make_shared<Light>(lght));
 					}
 				}
 			}

@@ -10,11 +10,12 @@
 #include "shape.hpp"
 #include "light.hpp"
 #include <map>
-
+#include "camera.hpp"
 struct Scene
 {
+
     //Camera
-    //Camera m_camera;
+    Camera m_camera=Camera("cam", 20);
 
     //Ambient Light
     Color m_ambient_light;

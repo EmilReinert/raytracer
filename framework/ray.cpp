@@ -99,6 +99,15 @@
 		if(m_direction.z==0){zz=0;}else{zz=1/m_direction.z;}
 		return glm::vec3{xx,yy,zz};}
 
+
+	//retrurns Ray with transformed direction 
+	Ray transformRay(glm::mat4 const & mat){
+		Ray ray = Ray();
+		return ray;
+		
+	}
+	
+
 	Color const Ray::raytrace(){return Color{0.0,1.0,1.0};}
 
 	Ray const Ray::reflectionRay(Ray const& mirror){

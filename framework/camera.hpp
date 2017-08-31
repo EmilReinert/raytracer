@@ -2,6 +2,7 @@
 #define BUW_CAMERA_HPP
 #include <iostream>
 #include <glm/vec3.hpp>
+#include <glm/glm.hpp>
 #include "color.hpp"
 #include <string>
 #include "ray.hpp"

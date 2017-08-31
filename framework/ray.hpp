@@ -5,6 +5,7 @@
 #define BUW_RAY_HPP
 
 #include <glm/vec3.hpp>
+#include <glm/glm.hpp>
 #include <cmath>
 #include <iostream>
 #include "color.hpp"
@@ -53,8 +54,10 @@ public:
 
 	//returns Inverse Direction
 	glm::vec3 getInvDir()const;
-
-
+	
+	//retrurns Ray with transformed direction 
+	Ray transformRay(glm::mat4 const & mat);
+	
 	glm::vec3 crossproduct(glm::vec3 const& a,glm::vec3 const&b);
 
 

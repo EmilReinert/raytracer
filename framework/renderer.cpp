@@ -30,7 +30,7 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file, Scene const&
 void Renderer::render()
 {
   const std::size_t checkersize = 20;
-	Camera cam{"camera1",20};cam.m_position = glm::vec3{0.0,0.0,500};
+	Camera cam= scene_.m_camera;
   for (unsigned y = 0; y < height_; ++y) {
     for (unsigned x = 0; x < width_; ++x) {
       Pixel p(x,y);

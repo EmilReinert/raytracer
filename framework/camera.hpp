@@ -17,12 +17,14 @@ unsigned m_fov;
 glm::vec3 m_position;
 glm::vec3 m_direction;
 glm::vec3 m_up;
+glm::mat4 m_transformation;
 
 
 	
 	Camera();
 	Camera(std::string const& name, unsigned const&fov);
-	Camera(std::string const& name, unsigned const&fov,glm::vec3 const&position,glm::vec3 const&direction,glm::vec3 up);
+	Camera(std::string const& name, unsigned const&fov,glm::vec3 const&position,glm::vec3 const&direction,glm::vec3 const & up);
+	Camera(std::string const& name, unsigned const&fov,glm::vec3 const&position,glm::vec3 const&direction,glm::vec3 const & up, glm::mat4 const &trans);
 	std::string getName() const;
 	unsigned getFov() const;
 	glm::vec3 getPosition() const;

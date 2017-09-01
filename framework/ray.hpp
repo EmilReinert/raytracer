@@ -59,14 +59,6 @@ public:
 	//retrurns Ray with transformed direction 
 	Ray transformRay(glm::mat4 const & mat);
 	
-	//returns a rotated Ray
-	Ray rotate( float const& angle, glm::vec3 axis);
-	
-	//returns a scaled Ray
-	Ray scale ( float const x, float const y, float const z);
-
-	//returns a traslated Ray
-	Ray translate( glm::vec3 const & vec);
 	
 	glm::vec3 crossproduct(glm::vec3 const& a,glm::vec3 const&b);
 
@@ -80,8 +72,8 @@ public:
 	Ray const refractionRay(Ray const& mirror);
 };
 
-
-
-
+glm::mat4 create_rotation( float const& angle, glm::vec3 axis);
+glm::mat4 create_scalation ( float const x, float const y, float const z);
+glm::mat4 create_translation( glm::vec3 const & vec);
 
 #endif

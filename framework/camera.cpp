@@ -6,22 +6,36 @@
 		m_fov{60},
 		m_position{glm::vec3{0.0f}},
 		m_direction{glm::vec3{0.0f,0.0f,-1.0f}},
-		m_up{glm::vec3{0.0f,1.0f,0.0f}}{}
+		m_up{glm::vec3{0.0f,1.0f,0.0f}},
+		m_transformation{glm::mat4(1.0f)}{}
 
 	Camera::Camera(std::string const& name, unsigned const&fov):
 		m_name{name},
 		m_fov{fov},
 		m_position{glm::vec3{0.0f}},
 		m_direction{glm::vec3{0.0f,0.0f,-1.0f}},
-		m_up{glm::vec3{0.0f,1.0f,0.0f}}{}
+		m_up{glm::vec3{0.0f,1.0f,0.0f}},
+		m_transformation{glm::mat4(1.0f)}{}
 
 
-	Camera::Camera(std::string const& name, unsigned const&fov,glm::vec3 const&position,glm::vec3 const&direction,glm::vec3 up):
+	Camera::Camera(std::string const& name, unsigned const&fov,glm::vec3 const&position,glm::vec3 const&direction,glm::vec3 const &up):
 		m_name{name},
 		m_fov{fov},
 		m_position{position},
 		m_direction{direction},
-		m_up{glm::vec3{up}}{}
+		m_up{glm::vec3{up}},
+		m_transformation{glm::mat4(1.0f)}{}
+	
+		Camera::Camera(std::string const& name, unsigned const&fov,glm::vec3 const&position,glm::vec3 const&direction,glm::vec3 const & up,glm::mat4 const& trans):
+		m_name{name},
+		m_fov{fov},
+		m_position{position},
+		m_direction{direction},
+		m_up{glm::vec3{up}},
+		m_transformation{trans}{}
+	
+
+
 
 
 
@@ -45,7 +59,8 @@
   		
   
 		Ray ray = Ray{m_position, direction}.newLength(1);
-		return ray;
+		Ray transformed = ray.transformRay(m_transformation);
+		return transformed;
 		/*
 		float zz = -120;
 		float xx,yy;

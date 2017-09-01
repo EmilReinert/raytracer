@@ -109,22 +109,22 @@
 		
 	}
 	//returns a rotated Ray
-	Ray Ray::rotate( float const& angle, glm::vec3 axis){
+	glm::mat4 create_rotation( float const& angle, glm::vec3 axis){
 		glm::mat4 mat = glm::rotate(glm::mat4(1.0f), angle , axis);
-		return transformRay(mat);
+		return mat;
 		}
 	
 	//returns a scaled Ray
-	Ray Ray::scale ( float const x, float const y, float const z){
+	glm::mat4 create_scalation ( float const x, float const y, float const z){
 		glm::vec3 vector(x,y,z);
 		glm::mat4 mat = glm::scale(glm::mat4(1.0f), vector);
-		return transformRay(mat);
+		return mat;
 		}
 
 	//returns a traslated Ray
-	Ray Ray::translate( glm::vec3 const & vec){
+	glm::mat4 create_translation( glm::vec3 const & vec){
 		glm::mat4 mat = glm::translate(glm::mat4(1.0f), vec);
-		return transformRay(mat);
+		return mat;
 		}
 
 	Color const Ray::raytrace(){return Color{0.0,1.0,1.0};}

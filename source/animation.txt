@@ -1,0 +1,8 @@
+define camera cam 20
+define material glass 0 0 0 1 1 1 1 1 1 1 100 1
+define material rot_glanz 1 0 0 1 1 1 1 1 1 0.3
+define material blau_glanz 0 0 1 1 1 1 1 1 1 0.3
+define material blau_matt 0 0 1 1 1 1 1 1 1 0
+define material spiegel 0 0 0 1 1 1 1 1 1 0.8
+define ambient 1 1 1
+

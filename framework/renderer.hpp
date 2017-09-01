@@ -26,11 +26,13 @@
 class Renderer
 {
 public:
+  Renderer();
   Renderer(unsigned w, unsigned h, std::string const& file);
 	Renderer(unsigned w, unsigned h, std::string const& file, Scene const& scene);
 
   void render();
   void write(Pixel const& p);
+  void setFilename(std::string name);
 
   inline std::vector<Color> const& colorbuffer() const
   {
@@ -46,7 +48,6 @@ public:
   Color const findLightIntersection(Ray const&ray, float distance)const;
   Color const refraction(Ray const&ray,Intersection const & inter, int depth);
 
-private:
   unsigned width_;
   unsigned height_;
   std::vector<Color> colorbuffer_;

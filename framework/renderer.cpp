@@ -9,6 +9,16 @@
 
 #include "renderer.hpp"
 
+
+
+Renderer::Renderer()
+  : width_(0)
+  , height_(0)
+  , colorbuffer_(width_*height_, Color(0.0, 0.0, 0.0))
+  , filename_(0)
+  , ppm_(width_, height_)
+{}
+
 Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
   : width_(w)
   , height_(h)
@@ -26,6 +36,9 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file, Scene const&
 	, scene_(scene)
 {}
 
+void Renderer::setFilename(std::string name){
+	 this->filename_=name;
+}
 
 void Renderer::render()
 {
@@ -194,7 +207,7 @@ Color const Renderer::findLightIntersection(Ray const&ray, float distance)const{
 	for(std::shared_ptr<Light> lght: scene_.m_lights){ 
 		bool hit = lght->intersect(ray,distance);
 		if(hit){//std::cout<<hit;
-			return lght->getColor();}
+			return lght->getColor()*lght->getIntensity();}
 	}
 	return Color();
 }

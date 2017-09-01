@@ -151,7 +151,7 @@
 							glm::vec3 axis;
 							stream>>word;
 							if(word == "x"){ axis = glm::vec3(1.0f,0.0f,0.0f);}
-							if(word == "y"){ axis = glm::vec3(0.0f,1.0f,0.0f);}std::cout<<"hi";
+							if(word == "y"){ axis = glm::vec3(0.0f,1.0f,0.0f);}
 							if(word == "z"){ axis = glm::vec3(0.0f,0.0f,1.0f);}
 							scene.m_camera.m_transformation *= create_rotation(angle, axis);
 						}

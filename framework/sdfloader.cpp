@@ -140,6 +140,43 @@
 					
 					}
 				}
+				if (word == "transform"){
+					stream >> word;
+					
+					if(word == "camera"){
+					stream >>word;
+						if(word == "rotate"){
+							float angle;
+							stream>> angle;
+							glm::vec3 axis;
+							stream>>word;
+							if(word == "x"){ axis = glm::vec3(1.0f,0.0f,0.0f);}
+							if(word == "y"){ axis = glm::vec3(0.0f,1.0f,0.0f);}std::cout<<"hi";
+							if(word == "z"){ axis = glm::vec3(0.0f,0.0f,1.0f);}
+							scene.m_camera.m_transformation *= create_rotation(angle, axis);
+						}
+						if(word =="scale"){
+							float x,y,z;
+							stream>>x;
+							stream>>y;
+							stream>>z;
+							scene.m_camera.m_transformation *= create_scalation(x,y,z);
+						}
+						if(word =="translate"){
+							glm::vec3 direction;
+							stream>>direction.x;
+							stream>>direction.y;
+							stream>>direction.z;
+							scene.m_camera.m_transformation *= create_translation(direction);
+						}
+
+					}
+
+
+
+
+
+				}
 			}
 			return scene;
 		}

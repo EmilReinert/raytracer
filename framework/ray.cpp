@@ -101,15 +101,34 @@
 
 
 	//retrurns Ray with transformed direction 
-	Ray transformRay(glm::mat4 const & mat){
-		Ray ray = Ray();
+	Ray Ray::transformRay(glm::mat4 const & mat){
+		glm::vec3 origin(mat*glm::vec4(m_origin,1));
+		glm::vec3 direction (mat*glm::vec4(m_direction,0));
+		Ray ray(origin,direction);
 		return ray;
 		
 	}
+	//returns a rotated Ray
+	Ray Ray::rotate( float const& angle, glm::vec3 axis){
+		glm::mat4 mat = glm::rotate(glm::mat4(1.0f), angle , axis);
+		return transformRay(mat);
+		}
 	
+	//returns a scaled Ray
+	Ray Ray::scale ( float const x, float const y, float const z){
+		glm::vec3 vector(x,y,z);
+		glm::mat4 mat = glm::scale(glm::mat4(1.0f), vector);
+		return transformRay(mat);
+		}
+
+	//returns a traslated Ray
+	Ray Ray::translate( glm::vec3 const & vec){
+		glm::mat4 mat = glm::translate(glm::mat4(1.0f), vec);
+		return transformRay(mat);
+		}
 
 	Color const Ray::raytrace(){return Color{0.0,1.0,1.0};}
-
+	//returns ray with reflected direction
 	Ray const Ray::reflectionRay(Ray const& mirror){
 		glm::vec3 I = m_direction;
 		glm::vec3 N = mirror.m_direction;
@@ -117,7 +136,7 @@
 		glm::vec3 NN{fktr*N.x,fktr*N.y,fktr*N.z};
 		return Ray{m_origin,I-NN};
 	}	
-	
+	//returns ray with refracted direction
 	Ray const Ray::refractionRay(Ray const& mirror){
 		int eta = 1;
 		glm::vec3 direction =glm::vec3(0.0f);

@@ -15,7 +15,7 @@ struct Scene
 {
 
     //Camera
-    Camera m_camera=Camera("cam", 20);
+    Camera m_camera;
 
     //Ambient Light
     Color m_ambient_light;

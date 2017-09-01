@@ -435,6 +435,14 @@ TEST_CASE("ray refraction","[rayfraction]"){
 	
 	
 }
+TEST_CASE("ray transformation","[raytransformation]"){
+	Ray ray1 {glm::vec3(0.0f),glm::vec3{10.0f,30.0f,10.0f}}; 
+	Ray ray2 {glm::vec3(0.0f),glm::vec3{0.0f,0.0f,10.0f}}; 
+	Ray ray3 = ray1.refractionRay(ray2);
+	std::cout<<"\n----------------REFRACTION----------------\n"<<ray1<<ray2<<ray3;
+	
+	
+}
 // ----------------------------------
 // CAMERA Tests
 // ----------------------------------

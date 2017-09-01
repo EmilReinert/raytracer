@@ -116,6 +116,29 @@
 						Light lght{name,position,radius,clr,intensity};
 						scene.m_lights.push_back(std::make_shared<Light>(lght));
 					}
+					if(word =="camera"){
+						std::string name;
+						stream>>name;
+						int fov;
+						stream>> fov;
+						glm::vec3 position;
+						stream>>position.x;
+						stream>>position.y;
+						stream>>position.z;
+						glm::vec3 direction;
+						stream>>direction.x;
+						stream>>direction.y;
+						stream>>direction.z;
+						glm::vec3 up;
+						stream>>up.x;
+						stream>>up.y;
+						stream>>up.z;
+						Camera cam(name, fov, position,direction,up);
+						scene.m_camera = cam;
+						
+
+					
+					}
 				}
 			}
 			return scene;

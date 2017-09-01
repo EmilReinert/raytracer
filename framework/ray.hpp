@@ -9,6 +9,7 @@
 #include <cmath>
 #include <iostream>
 #include "color.hpp"
+#include <glm/gtc/matrix_transform.hpp> 
 
 
 struct Ray
@@ -57,6 +58,15 @@ public:
 	
 	//retrurns Ray with transformed direction 
 	Ray transformRay(glm::mat4 const & mat);
+	
+	//returns a rotated Ray
+	Ray rotate( float const& angle, glm::vec3 axis);
+	
+	//returns a scaled Ray
+	Ray scale ( float const x, float const y, float const z);
+
+	//returns a traslated Ray
+	Ray translate( glm::vec3 const & vec);
 	
 	glm::vec3 crossproduct(glm::vec3 const& a,glm::vec3 const&b);
 

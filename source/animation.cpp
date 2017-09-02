@@ -28,17 +28,29 @@ int main(){
 	std::cout<<scene;
 	
 	
-	unsigned const width = 100;
-	unsigned const height =100;
+	unsigned const width = 300;
+	unsigned const height =300;
 	std::string  filename = "1";
 	
 	
 	Renderer app{width, height, filename, scene};
 
 
-	for(int i; i<3;i++){
+	for(int i; i<2;i++){
 	filename = std::to_string(i);
 	app.filename_=filename;
+
+	auto it = scene.m_shapes.begin();
+
+
+
+
+
+
+
+
+
+
 		std::thread thr([&app]() { app.render(); });	 
 	thr.join();
 	}

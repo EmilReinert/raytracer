@@ -31,7 +31,7 @@ struct Scene
     std::vector<std::shared_ptr<Shape>> m_shapes;
 
     //Composites
-    std::vector<Composite> m_composites; 
+    std::vector<std::shared_ptr<Composite>> m_composites; 
 
 	std::ostream& print(std::ostream & os){
 		std::cout<<"\nScene: \n";
@@ -58,6 +58,12 @@ struct Scene
 			int i = 1;
 			for(std::shared_ptr<Shape> shp: m_shapes){
 				os<<"\nShape "<<i<<": "<< shp->get_name();
+				i++;}}
+		if(m_composites.empty()){os<<"\n----no composites added yet----\n";}
+		else{
+			int i = 1;
+			for(std::shared_ptr<Composite> comp: m_composites){
+				os<<"\nComposite "<<i<<": "<< *comp;
 				i++;}}
 		return os;
 	}

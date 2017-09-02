@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
 		glm::vec3{-5000.0f,-3000.0f,-150.0f},
 glm::vec3{100.0f,-200.0f,-25000.0f}	//max
 	};
-	scene.m_shapes.push_back(std::make_shared<Box>(box1));
+	//scene.m_shapes.push_back(std::make_shared<Box>(box1));
 	
 	
 	
@@ -66,11 +66,16 @@ glm::vec3{100.0f,-200.0f,-25000.0f}	//max
 		glm::vec3{1000.0f,-3000.0f,-1500.0f},
 glm::vec3{100.0f,3000.0f,0.0f}	//max
 	};
-	scene.m_shapes.push_back(std::make_shared<Box>(box2));
+	//scene.m_shapes.push_back(std::make_shared<Box>(box2));
 	
-	//composites(?)
+	//composites
+	Composite comp{"boxes"};
+	comp.add_shape(std::make_shared<Box>(box1));
+	comp.add_shape(std::make_shared<Box>(box2));
+	scene.m_composites.push_back(std::make_shared<Composite>(comp));
 	
-	
+	Camera cam("cam",20);
+	scene.m_camera = cam;
 	
 	std::cout<<scene;
 ////////

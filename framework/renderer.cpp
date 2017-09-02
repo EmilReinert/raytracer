@@ -146,6 +146,15 @@ Intersection const Renderer::findIntersection(Ray const&ray, float distance){
 			
 		}
 	}
+	for(std::shared_ptr<Composite> comp: scene_.m_composites){ 
+		Intersection inter = comp->realintersect(ray,distance);
+		if(inter.isHit()&&inter.getDistance()< distance_to_object){
+			shape_ptr = inter.getShape();
+			distance_to_object = inter.getDistance();
+			i = inter;
+			
+		}
+	}
 	return i;
 }
 
@@ -160,6 +169,19 @@ std::map<std::shared_ptr<Light>,float > const Renderer::whatLight(Intersection c
 		float distance =10000000.0f;
 		for(std::shared_ptr<Shape> shp: scene_.m_shapes){ 
 			Intersection holderintersection = shp->realintersect(light_ray,distance);
+			if(holderintersection.isHit()){
+				if(holderintersection.getShape()->get_material().m_opacity>0){
+				//float op= holderintersection.getShape()->get_material().m_opacity*0.01;
+				///////////////WTF when i call that something happensss   :(
+				isLight=true;
+				}
+				else{lightMap[lght]+=0.0f;
+				isLight=false;
+				break;}
+			}		
+		}
+		for(std::shared_ptr<Composite> comp: scene_.m_composites){ 
+			Intersection holderintersection = comp->realintersect(light_ray,distance);
 			if(holderintersection.isHit()){
 				if(holderintersection.getShape()->get_material().m_opacity>0){
 				//float op= holderintersection.getShape()->get_material().m_opacity*0.01;

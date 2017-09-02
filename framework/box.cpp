@@ -125,9 +125,9 @@ Intersection Box::realintersect(Ray const& ray, float& distance){
 	Intersection iii = Intersection();
     //normalize ray
 	   
-    Ray nray {ray.m_origin,ray.m_direction};
-    nray.m_direction = glm::normalize(ray.m_direction);
-
+    Ray noray {ray.m_origin,ray.m_direction};
+    noray.m_direction = glm::normalize(ray.m_direction);
+    Ray nray = noray.transformRay(m_transformation);
     glm::vec3 invers = nray.getInvDir();
 
     float t0 = (m_min.x - nray.m_origin.x) * invers.x;

@@ -50,6 +50,7 @@ public:
 protected:
 	std::string m_name;
 	Material m_material;
+	glm::mat4 m_transformation=glm::mat4(1.0f);
 };
 
 #ifndef BUW_HIT_HPP

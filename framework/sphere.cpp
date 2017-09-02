@@ -12,7 +12,8 @@ Sphere::Sphere(std::string const& name) :
 				Color{0.0f,0.0f,0.0f},
 				0.0f}},
 	m_center{glm::vec3{0.0f}},
-	m_radius{1}{}
+	m_radius{1}
+{}
 
 //custom constructor
 Sphere::Sphere(std::string const& name, Material const& material,
@@ -70,10 +71,13 @@ bool Sphere::intersect(Ray const& ray, float& distance)const
 		m_radius * m_radius,distance);
 }
 //returns the intersection btwn Sphere & Ray
-Intersection Sphere::realintersect(Ray const& ray, float& distance){
+Intersection Sphere::realintersect(Ray const& ray1, float& distance){
 	Intersection inter = Intersection();
 	//is there even an intersection
 	float holder = distance;
+	Ray rr =ray1;
+	Ray ray = rr.transformRay(m_transformation);
+	
 	bool hit = intersect(ray,holder);
 	if( !hit){return inter;}
 	//geometrie

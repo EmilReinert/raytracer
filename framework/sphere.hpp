@@ -34,7 +34,7 @@ public:
 	std::ostream& print (std::ostream& os) const override;
 
 	bool intersect(Ray const& ray, float& distance)const override;
-	Intersection realintersect(Ray const& ray, float& distance) override;
+	Intersection realintersect(Ray const& ray1, float& distance) override;
 
 private:
 	glm::vec3 	m_center;

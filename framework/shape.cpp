@@ -6,7 +6,8 @@
 //Constructor
 Shape::Shape (std::string const& name, Material const& material) :
 	m_name{name},
-	m_material{material}
+	m_material{material},
+	m_transformation{glm::mat4(1.0f)}
 {}
 
 //Destructor

@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 //////// Beispielscene 
 	SDFloader loader{};
 	Scene scene {};
-	std::string bla = "/home/emil/Documents/RAYTRACER/final_program/raytracer/source/material_input.txt";
+	std::string bla = "/home/emil/Documents/RAYTRACER/program/raytracer/source/material_input.txt";
 	scene = loader.load(bla);
 	//light
 	Light light1{"light1",glm::vec3{0.0,100.0,0.0},10.0f,Color{1.0f,1.0f,1.0f},0.5f};

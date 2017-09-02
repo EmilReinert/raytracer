@@ -24,7 +24,7 @@
 int main(){
 
 	SDFloader loader{};
-	Scene scene = loader.load("/home/emil/Documents/RAYTRACER/final_program/raytracer/source/animation.txt");
+	Scene scene = loader.load("/home/emil/Documents/RAYTRACER/program/raytracer/source/animation.txt");
 	std::cout<<scene;
 	
 	

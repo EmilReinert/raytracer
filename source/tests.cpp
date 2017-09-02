@@ -17,6 +17,7 @@
 #include "sdfloader.hpp"
 #include "light.hpp"
 #include "camera.hpp"
+#include "composite.hpp"
 
 
 // ----------------------------------
@@ -451,6 +452,27 @@ TEST_CASE("blablacamera","[yoloo]"){
 	float cc= cam.getDirection().z;
 	REQUIRE(cc==Approx(-1));
 	std::cout <<cam;
+
+}
+
+// ----------------------------------
+// COMPOSITE Tests
+// ----------------------------------
+TEST_CASE("compositeblub","[comppp]"){
+	std::vector<std::shared_ptr<Shape>> shapes;
+	Color c {0.0f,0.0f,0.0f};
+	Box box {"test_box",
+		Material{"",c,c,c, 0.0f},
+		glm::vec3{0.0f,0.0f,-1.0f},	//min
+		glm::vec3{2.0f,2.0f,-3.0f}	//max
+	};
+	Sphere s {"some_sphere", Material{"",Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},0.0f},
+		glm::vec3(0.0f),300};
+	Composite comp{"boxundsphere"};
+	comp.add_shape(std::make_shared<Box>(box));
+	comp.add_shape(std::make_shared<Sphere>(s));
+	std::cout<<"\n----------composite-------------\n"<<comp;
+	
 
 }
 

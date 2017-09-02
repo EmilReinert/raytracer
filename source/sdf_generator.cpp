@@ -23,7 +23,7 @@
 int main(){
 
 	SDFloader loader{};
-	Scene scene = loader.load("/home/emil/Documents/RAYTRACER/final_program/raytracer/source/sdf_scene.txt");
+	Scene scene = loader.load("/home/emil/Documents/RAYTRACER/program/raytracer/source/sdf_scene.txt");
 	std::cout<<scene;
 	
 	unsigned const width = 1000;

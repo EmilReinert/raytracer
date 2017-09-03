@@ -29,24 +29,24 @@ int main(){
 	std::cout<<scene;
 	
 	
-	unsigned const width = 200;
-	unsigned const height =200;
+	unsigned const width = 1000;
+	unsigned const height =1000;
 	std::string  filename = "1";
 	
 	
 	Renderer app{width, height, filename, scene};
 
 
-	for(int i; i<=100;i++){
+	for(int i; i<=140;i++){
 		filename = std::to_string(i);
 		app.filename_=filename;
 
 		std::shared_ptr<Shape> it = *scene.m_shapes.begin();
-		float z_dir = 2*12.73*i;
-		float y_dir = ((20*sin(0.2*i))*(20*sin(0.2*i)));
-		if(i<=63){y_dir=y_dir-(6.36619*i);}
-		std::cout<<y_dir<<"\n";
-		std::cout<<z_dir<<"\n";
+		float z_dir = 2*12.73*(0.5)*i;
+		float y_dir = ((30*sin(0.2*(0.5)*i))*(30*sin(0.2*(0.5)*i)));
+		y_dir=y_dir-(6.36619*(0.5)*i);
+		//std::cout<<y_dir<<"\n";
+		//std::cout<<z_dir<<"\n";
 		
 		glm::vec3 direction (0.0f,y_dir,z_dir);
 		it->translate(direction);	

@@ -217,3 +217,7 @@ Intersection Box::realintersect(Ray const& ray, float& distance){
 	return iii;
 	
 }
+
+
+
+

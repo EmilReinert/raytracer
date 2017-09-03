@@ -38,6 +38,8 @@ public:
 	bool intersect(Ray const& ray, float& distance) const override;
 	Intersection realintersect(Ray const& ray, float& distance) override ;
 
+	
+
 private:
 	glm::vec3	m_min;
 	glm::vec3	m_max;

@@ -21,7 +21,7 @@ struct Intersection;
 class Shape
 {
 public:
-
+	
 	Shape(std::string const& name, Material const& material);
 
 	virtual ~Shape();
@@ -39,6 +39,11 @@ public:
 	//access members directly
 	//the operator takes an shape object and calls the objects
 	//default or custom print function
+
+	void rotate( float const& angle, glm::vec3 axis);
+	void scale( float const x, float const y, float const z);
+	void translate( glm::vec3 const & vec);
+	
 	friend std::ostream& operator<<(std::ostream& os, Shape const& s);
 
 	virtual std::ostream& print (std::ostream& os) const;
@@ -47,10 +52,15 @@ public:
 	virtual bool intersect(Ray const& ray, float& distance)const = 0;
 	virtual Intersection realintersect(Ray const& ray, float& distance) =0;
 	
+
+	
+
 protected:
 	std::string m_name;
 	Material m_material;
 	glm::mat4 m_transformation=glm::mat4(1.0f);
+	
+	
 };
 
 #ifndef BUW_HIT_HPP

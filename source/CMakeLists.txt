@@ -38,8 +38,9 @@ target_link_libraries(tests
   )
 
 #ANIMATION
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "/home/emil/Documents/RAYTRACER/final_program/raytracer/build/video")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "/home/emil/Documents/RAYTRACER/program/raytracer/build/video")
 add_executable(animation animation.cpp)
+
 
 target_link_libraries(animation ${FRAMEWORK_NAME} ${LIBRARIES}
   glfw

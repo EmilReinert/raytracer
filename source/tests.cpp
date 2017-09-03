@@ -197,10 +197,6 @@ TEST_CASE("material in place of color struct", "Material")
 	std::cout << mate2;
 }
 
-int main(int argc, char *argv[])
-{
-  return Catch::Session().run(argc, argv);
-}
 
 // ----------------------------------
 // SDFLOADER Tests
@@ -436,13 +432,7 @@ TEST_CASE("ray refraction","[rayfraction]"){
 	
 	
 }
-TEST_CASE("ray transformation","[raytransformation]"){
-	Ray ray1 {glm::vec3(0.0f),glm::vec3{10.0f,30.0f,10.0f}}; 
-	Ray ray3 = ray1.transformRay(create_rotation(90,glm::vec3(0.0f,0.0f,1.0f)));
-	std::cout<<"\n----------------transformation----------------\n"<<ray1<<ray3;
-	
-	
-}
+
 // ----------------------------------
 // CAMERA Tests
 // ----------------------------------
@@ -475,4 +465,33 @@ TEST_CASE("compositeblub","[comppp]"){
 	
 
 }
+
+// ----------------------------------
+// TRANSFORMATION Tests
+// ----------------------------------
+TEST_CASE("ray transformation","[raytransformation]"){
+	Ray ray1 {glm::vec3(0.0f),glm::vec3{10.0f,30.0f,10.0f}}; 
+	Ray ray3 = ray1.transformRay(create_rotation(90,glm::vec3(0.0f,0.0f,1.0f)));
+	std::cout<<"\n----------------transformation----------------\n"<<ray1<<ray3;
+	
+	
+}
+TEST_CASE("shape transformation","[shapetransformtion]"){
+	Color c {0.0f,0.0f,0.0f};
+	Box box {"test_box",
+		Material{"",c,c,c, 0.0f},
+		glm::vec3{0.0f,0.0f,-1.0f},	//min
+		glm::vec3{2.0f,2.0f,-3.0f}	//max
+	};
+	Sphere s {"some_sphere", Material{"",Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},Color{0.0f,0.0f,0.0f},0.0f},
+		glm::vec3(0.0f),300};
+	glm::vec3 direction (0.0f,0.0f,1.0f);
+	box.rotate(90,direction);
+}
+
+int main(int argc, char *argv[])
+{
+  return Catch::Session().run(argc, argv);
+}
+
 

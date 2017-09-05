@@ -1,6 +1,6 @@
 define camera cam 20
 transform camera rotate 340 x
-transform camera translate 0 100 0
+transform camera translate 0 0 500
 define material glass 0 0 0 1 1 1 1 1 1 1 100 1
 define material rot_glanz 1 0 0 1 1 1 1 1 1 0.3
 define material blau_glanz 0 0 1 1 1 1 1 1 1 0.3

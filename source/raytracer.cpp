@@ -21,9 +21,9 @@ int main(int argc, char* argv[])
 	std::string bla = "/home/emil/Documents/RAYTRACER/program/raytracer/source/material_input.txt";
 	scene = loader.load(bla);
 	//light
-	Light light1{"light1",glm::vec3{0.0,100.0,0.0},10.0f,Color{1.0f,1.0f,1.0f},0.5f};
+	Light light1{"light1",glm::vec3{0.0,100.0,0.0},10.0f,Color{1.0f,1.0f,1.0f},0.7f};
 	scene.m_lights.push_back(std::make_shared<Light>(light1));
-	Light light2{"light2",glm::vec3{-80.0,100.0,0.0},50.0f,Color{1.0f,1.0f,1.0f},0.5f};
+	Light light2{"light2",glm::vec3{-80.0,100.0,0.0},50.0f,Color{1.0f,1.0f,1.0f},0.3f};
 	scene.m_lights.push_back(std::make_shared<Light>(light2));
 	//ambient
 	Color ambient{1.0f,1.0f,1.0f};

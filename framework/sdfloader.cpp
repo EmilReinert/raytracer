@@ -90,6 +90,28 @@
 							scene.m_shapes.push_back(std::make_shared<Box>(box));
 							std::cout<<"\nBox Added: "<< name;
 							}
+						if(word=="composite"){
+							std::string name;
+							stream>>name;
+							Composite comp(name);
+							while(!stream.eof()){
+								std::string shape_name;
+								stream>>shape_name;
+								std::shared_ptr<Shape> found;
+								for(std::shared_ptr<Shape> shp:scene.m_shapes){
+									if(shp->get_name()==shape_name){found = shp;}
+									if(!found){
+										std::cout<<"\ngiven shapes don't exist to form composite";
+									}
+									else{
+										comp.add_shape(found);
+									}
+								}
+								scene.m_composites.push_back(std::make_shared<Composite>(comp));
+								std::cout<<"\nComposite Added: "<< name;
+							}
+						
+						}
 					}
 					if(word=="ambient"){
 						Color clr;
